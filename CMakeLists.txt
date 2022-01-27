@@ -1,95 +1,92 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
+project(host-gcc LANGUAGES C CXX)
 
-# Set the project name to your project name, my project isn't very descriptive
-project(myproject CXX)
-include(cmake/StandardProjectSettings.cmake)
-include(cmake/PreventInSourceBuilds.cmake)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 
-# Link this 'library' to set the c++ standard / compile-time options requested
-add_library(project_options INTERFACE)
-target_compile_features(project_options INTERFACE cxx_std_17)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-  option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
-  if(ENABLE_BUILD_WITH_TIME_TRACE)
-    add_compile_definitions(project_options INTERFACE -ftime-trace)
+set(CLANG_TIDY_OPTIONS -checks=-*,readability-* CACHE STRING "clang-tidy options" )
+
+# uncomment this line to include clang_tidy as part of 
+# the compilation phase
+# set(CMAKE_CXX_CLANG_TIDY clang-tidy ${CLANG_TIDY_OPTIONS})
+
+if(MSVC)
+add_compile_options(
+    /W4
+    $<$<CONFIG:DEBUG>:/Od>
+    $<$<CONFIG:RELEASE>:/O2>
+)
+else()
+add_compile_options(
+#    -fno-elide-constructors
+    -Wall
+    -Wextra
+    -Wconversion
+    -Wsign-conversion
+    # -Werror
+    $<$<CONFIG:DEBUG>:-g3>
+    $<$<CONFIG:DEBUG>:-Og>
+    $<$<CONFIG:RELEASE>:-O3>
+)
+endif()
+
+add_compile_definitions(
+    $<$<CONFIG:DEBUG>:DEBUG>
+    $<$<CONFIG:DEBUG>:_DEBUG>     # MSVC enables assert
+    $<$<CONFIG:RELEASE>:NDEBUG>   # GCC/G++ disables asserts
+)
+
+# WARNING: wildcards are expanded at generate time, not build time
+# regenerate the build if new source files are added
+
+file (GLOB USER_SRC ${CMAKE_SOURCE_DIR}/src/*.c ${CMAKE_SOURCE_DIR}/src/*.cpp)
+
+add_executable(Application ${USER_SRC})
+
+target_include_directories(Application PRIVATE
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/include
+)
+
+set(CMAKE_THREAD_PREFER_PTHREAD ON)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+
+find_package(Threads REQUIRED)
+target_link_libraries(Application PRIVATE Threads::Threads)
+
+# strip release exe 
+
+if (CMAKE_BUILD_TYPE STREQUAL Release)
+  if ("${CMAKE_STRIP}")
+    add_custom_command(
+      TARGET Application
+      POST_BUILD
+      COMMAND ${CMAKE_STRIP} $<TARGET_FILE:Application>
+    )
+  else()
+    message(STATUS "'strip' not found: cannot strip executable binary")
   endif()
 endif()
 
-# Link this 'library' to use the warnings specified in CompilerWarnings.cmake
-add_library(project_warnings INTERFACE)
+# static analysis targets
 
-# enable cache system
-include(cmake/Cache.cmake)
+find_program(CLANG_TIDY clang-tidy)
 
-# standard compiler warnings
-include(cmake/CompilerWarnings.cmake)
-set_project_warnings(project_warnings)
-
-# sanitizer options if supported by compiler
-include(cmake/Sanitizers.cmake)
-enable_sanitizers(project_options)
-
-# enable doxygen
-include(cmake/Doxygen.cmake)
-enable_doxygen()
-
-# allow for static analysis options
-include(cmake/StaticAnalyzers.cmake)
-
-option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
-option(ENABLE_TESTING "Enable Test Builds" ON)
-option(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
-
-# Very basic PCH example
-option(ENABLE_PCH "Enable Precompiled Headers" OFF)
-if(ENABLE_PCH)
-  # This sets a global PCH parameter, each project will build its own PCH, which is a good idea if any #define's change
-  #
-  # consider breaking this out per project as necessary
-  target_precompile_headers(
-    project_options
-    INTERFACE
-    <vector>
-    <string>
-    <map>
-    <utility>)
+if (CLANG_TIDY)
+    add_custom_target(
+        clang-tidy-check clang-tidy -p ${CMAKE_BINARY_DIR}/compile_commands.json ${CLANG_TIDY_OPTIONS} ${USER_SRC}
+        DEPENDS ${USER_SRC})
 endif()
 
-# Set up some extra Conan dependencies based on our needs before loading Conan
-set(CONAN_EXTRA_REQUIRES "")
-set(CONAN_EXTRA_OPTIONS "")
+# optional testing
 
-if(CPP_STARTER_USE_IMGUI)
-  set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} imgui-sfml/2.1@bincrafters/stable)
-
-  # set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sfml:shared=False sfml:graphics=True sfml:audio=False
-  # sfml:window=True libalsa:disable_python=True)
-endif()
-
-if(CPP_STARTER_USE_SDL)
-  set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} sdl2/2.0.10@bincrafters/stable)
-  # set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sdl2:wayland=True)
-endif()
-
-include(cmake/Conan.cmake)
-run_conan()
-
-if(ENABLE_TESTING)
+if (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/tests)
   enable_testing()
-  message("Building Tests. Be sure to check out test/constexpr_tests for constexpr testing")
-  add_subdirectory(test)
-endif()
-
-if(ENABLE_FUZZING)
-  message("Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
-  add_subdirectory(fuzz_test)
-endif()
-
-add_subdirectory(src)
-
-option(ENABLE_UNITY "Enable Unity builds of projects" OFF)
-if(ENABLE_UNITY)
-  # Add for any project you want to apply unity builds for
-  set_target_properties(intro PROPERTIES UNITY_BUILD ON)
+  add_subdirectory(tests)
 endif()

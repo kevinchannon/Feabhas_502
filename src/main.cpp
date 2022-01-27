@@ -1,45 +1,25 @@
-#include <functional>
+// -----------------------------------------------------------------------------
+// main program
+//
+// DISCLAIMER:
+// Feabhas is furnishing this item "as is". Feabhas does not provide any
+// warranty of the item whatsoever, whether express, implied, or statutory,
+// including, but not limited to, any warranty of merchantability or fitness
+// for a particular purpose or any warranty that the contents of the item will
+// be error-free.
+// In no respect shall Feabhas incur any liability for any damages, including,
+// but limited to, direct, indirect, special, or consequential damages arising
+// out of, resulting from, or any way connected to the use of the item, whether
+// or not based upon warranty, contract, tort, or otherwise; whether or not
+// injury was sustained by persons or property or otherwise; and whether or not
+// loss was sustained from, or arose out of, the results of, the item, or any
+// services that may be provided by Feabhas.
+// -----------------------------------------------------------------------------
+
 #include <iostream>
 
-#include <spdlog/spdlog.h>
-
-
-#include <docopt/docopt.h>
-
-#include <iostream>
-
-static constexpr auto USAGE =
-  R"(Naval Fate.
-
-    Usage:
-          naval_fate ship new <name>...
-          naval_fate ship <name> move <x> <y> [--speed=<kn>]
-          naval_fate ship shoot <x> <y>
-          naval_fate mine (set|remove) <x> <y> [--moored | --drifting]
-          naval_fate (-h | --help)
-          naval_fate --version
- Options:
-          -h --help     Show this screen.
-          --version     Show version.
-          --speed=<kn>  Speed in knots [default: 10].
-          --moored      Moored (anchored) mine.
-          --drifting    Drifting mine.
-)";
-
-int main(int argc, const char **argv)
+int main()
 {
-  std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
-    { std::next(argv), std::next(argv, argc) },
-    true,// show help if requested
-    "Naval Fate 2.0");// version string
-
-  for (auto const &arg : args) {
-    std::cout << arg.first << arg.second << std::endl;
-  }
-
-
-  //Use the default logger (stdout, multi-threaded, colored)
-  spdlog::info("Hello, {}!", "World");
-
-  fmt::print("Hello, from {}\n", "{fmt}");
+    std::cout << "Hello world!" << std::endl;
+    return 0;
 }
