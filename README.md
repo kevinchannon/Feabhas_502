@@ -28,6 +28,34 @@ created a front end script to automate the build.
 You can add additional C/C++ source and header files to the `src` directory. If 
 you prefer you can place your header files in the `include` directory.
 
+## Using VS Code keys
+
+VS Code tasks and launch scripts are defined so that `Ctrl-Shift-B` will presnt a 
+list of build tasks:
+
+   * Build           # standard build
+   * Clean           # removes object files and executables
+   * Reset           # regenerate the CMake build files
+   
+To run the build application use `Ctrl-Shift-P` shortcut key, enter test in 
+the search field and then select `Tasks: Run Test Task from the list of tasks shown. 
+This will display a list of run options: choose `Run Application`. The next time 
+you use `Ctrl-Shift-P` the `Tasks: Run Test Task` will be at the top of the list. 
+
+To debug your code with the interactive (visual) debugger press the `<F5>` key or use the
+**Run -> Start Debugging** menu.
+
+The debug sessions will stop at the entry to the `main` function and *may* display a 
+red error box saying:
+
+```
+Exception has occured.
+```
+
+This is normal: just close the warning popup and use the debug icon commands at the top 
+manage the debug system. The icons are (from left to right):
+  **continue**, **stop over**, **step into**, **step return**, **restart** and **quit**
+
 ## To build the application from a Linux shell
 
 At the project root do:
@@ -60,22 +88,6 @@ the `reset` option:
 $ ./build.sh reset
 ```
 
-## VS Code Debug
-
-To debug your code with the interactive (visual) debugger press the `<F5>` key or use the
-**Run -> Start Debugging** menu.
-
-The debug sessions will stop at the entry to the `main` function and may display a 
-red error box saying:
-
-```
-Exception has occured.
-```
-
-This is normal: just close the warning popup and use the debug icon commands at the top 
-manage the debug system. The icons are (from left to right):
-  **continue**, **stop over**, **step into**, **step return**, **restart** and **quit**
-
 # Building an exercise solution
 
 To build any of the exercise solutions run the script:
@@ -89,3 +101,4 @@ where `<N>` is the exercise number. The solutions should be in a folder called
 
 **NOTE:** this script will copy all files in the `src` folder to the `src.bak` 
 folder having removed any files already present in `src.bak`.
+
