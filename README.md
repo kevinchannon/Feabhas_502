@@ -30,15 +30,15 @@ you prefer you can place your header files in the `include` directory.
 
 ## Using VS Code keys
 
-VS Code tasks and launch scripts are defined so that `Ctrl-Shift-B` will presnt a 
+VS Code tasks and launch scripts are defined so that `Ctrl-Shift-B` will present a 
 list of build tasks:
 
-   * Build           # standard build
-   * Clean           # removes object files and executables
-   * Reset           # regenerate the CMake build files
+   * **Build** standard build
+   * **Clean** removes object files and executables
+   * **Reset** regenerate the CMake build files
    
-To run the build application use `Ctrl-Shift-P` shortcut key, enter test in 
-the search field and then select `Tasks: Run Test Task from the list of tasks shown. 
+To run the application use `Ctrl-Shift-P` shortcut key, enter test in 
+the search field and then select `Tasks: Run Test Task` from the list of tasks shown. 
 This will display a list of run options: choose `Run Application`. The next time 
 you use `Ctrl-Shift-P` the `Tasks: Run Test Task` will be at the top of the list. 
 
