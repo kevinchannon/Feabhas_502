@@ -18,7 +18,12 @@ set(CLANG_TIDY_OPTIONS -checks=-*,readability-* CACHE STRING "clang-tidy options
 
 if(MSVC)
 add_compile_options(
-    /W4
+	  /std:c++latest
+    /DWIN32 
+    /D_WINDOWS 
+    /W4 
+    /GR 
+    /EHsc
     $<$<CONFIG:DEBUG>:/Od>
     $<$<CONFIG:RELEASE>:/O2>
 )

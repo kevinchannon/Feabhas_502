@@ -8,10 +8,7 @@
             "type": "shell",
             "command": "${workspaceFolder}/build.sh",
             "args": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "problemMatcher": []
         },
         {
@@ -41,7 +38,7 @@
             "args": [
                 "clang-tidy"
             ],
-            "group": "build",
+            "group": "test",
             "problemMatcher": []
         },
         {
