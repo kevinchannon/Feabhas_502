@@ -24,12 +24,6 @@
 #include "Alarm.hpp"
 #include "AlarmIO.hpp"
 
-class A
-{
-public:
-    static inline int x = 10;
-};
-
 void wait()
 {
     int x;
