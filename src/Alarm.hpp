@@ -11,7 +11,9 @@ namespace kjc
 
 			Warning,
 			Caution,
-			Advisory
+			Advisory,
+
+			TypeCount
 		};
 
 		Alarm();

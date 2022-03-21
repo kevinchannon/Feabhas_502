@@ -32,7 +32,6 @@ void wait()
 
 int main()
 {
-
     const auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
 
     std::cout << "Alarm: " << alarm << std::endl;

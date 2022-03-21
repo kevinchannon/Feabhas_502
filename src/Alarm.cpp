@@ -5,6 +5,8 @@
 #include <iostream>
 #pragma warning(pop)
 
+#include <array>
+
 namespace kjc
 {
 	Alarm::Alarm() : _type{ Type::Unknown }
@@ -34,27 +36,21 @@ namespace kjc
 	
 	const char* Alarm::_type_to_string(Type t)
 	{
-		switch (t)
-		{
-		case Type::Warning: {
-			return "Warning";
+		using LookupEntry_t = std::pair<Type, const char*>;
+
+		const auto index = static_cast<size_t>(t);
+		if (index > static_cast<size_t>(Type::TypeCount)) {
+			return _type_to_string(Type::Unknown);
 		}
 
-		case Type::Caution: {
-			return "Caution";
-		}
+		static constexpr auto name_lookup = std::array{
+			LookupEntry_t{Type::Warning, "Warning"},
+			LookupEntry_t{Type::Caution, "Caution"},
+			LookupEntry_t{Type::Advisory, "Advisory"}
+		};
 
-		case Type::Advisory: {
-			return "Advisory";
-		}
+		static_assert(Type::TypeCount == Type(3), "Invalid type count. Check array above");
 
-		case Type::Unknown: {
-			return "Unknown";
-		}
-
-		default:;
-		}
-
-		return "Unknown";
+		return name_lookup[index].second;
 	}
 }
