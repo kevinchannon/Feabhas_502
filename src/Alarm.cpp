@@ -2,7 +2,7 @@
 
 namespace kjc
 {
-	Alarm::Alarm() : _type{ Type::UNKNOWN }
+	Alarm::Alarm() : _type{ Type::Unknown }
 	{
 	}
 
@@ -28,25 +28,25 @@ namespace kjc
 	{
 		switch (t)
 		{
-		case Type::WARNING: {
-			return "WARNING";
+		case Type::Warning: {
+			return "Warning";
 		}
 
-		case Type::CAUTION: {
-			return "CAUTION";
+		case Type::Caution: {
+			return "Caution";
 		}
 
-		case Type::ADVISORY: {
-			return "ADVISORY";
+		case Type::Advisory: {
+			return "Advisory";
 		}
 
-		case Type::UNKNOWN: {
-			return "UNKNOWN";
+		case Type::Unknown: {
+			return "Unknown";
 		}
 
 		default:;
 		}
 
-		return "UNKNOWN";
+		return "Unknown";
 	}
 }

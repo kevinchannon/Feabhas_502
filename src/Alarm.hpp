@@ -8,11 +8,11 @@ namespace kjc
 	public:
 		enum class Type
 		{
-			UNKNOWN,
+			Unknown,
 
-			WARNING,
-			CAUTION,
-			ADVISORY
+			Warning,
+			Caution,
+			Advisory
 		};
 
 		Alarm();

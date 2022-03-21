@@ -33,7 +33,7 @@ public:
 int main()
 {
 
-    auto alarm = kjc::Alarm{ kjc::Alarm::Type::ADVISORY };
+    auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
 
     std::cout << "Alarm: " << alarm << std::endl;
     return 0;
