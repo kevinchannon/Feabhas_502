@@ -16,10 +16,25 @@
 // services that may be provided by Feabhas.
 // -----------------------------------------------------------------------------
 
+#pragma warning(push)
+#pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
 #include <iostream>
+#pragma warning(pop)
+
+#include "Alarm.hpp"
+#include "AlarmIO.hpp"
+
+class A
+{
+public:
+    static inline int x = 10;
+};
 
 int main()
 {
-    std::cout << "Hello world!" << std::endl;
+
+    auto alarm = kjc::Alarm{ kjc::Alarm::Type::ADVISORY };
+
+    std::cout << "Alarm: " << alarm << std::endl;
     return 0;
 }

@@ -24,3 +24,6 @@ Thumbs.db
 
 build/
 out/
+/.vs
+/src/x64
+/x64
