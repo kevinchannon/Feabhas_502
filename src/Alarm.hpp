@@ -2,13 +2,12 @@
 
 namespace kjc
 {
-
 	class Alarm
 	{
 	public:
 		enum class Type
 		{
-			Unknown,
+			Unknown = -1,
 
 			Warning,
 			Caution,
