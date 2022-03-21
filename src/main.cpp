@@ -30,11 +30,19 @@ public:
     static inline int x = 10;
 };
 
+void wait()
+{
+    int x;
+    std::cin >> x;
+}
+
 int main()
 {
 
     auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
 
     std::cout << "Alarm: " << alarm << std::endl;
+
+    wait();
     return 0;
 }

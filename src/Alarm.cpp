@@ -1,17 +1,25 @@
 #include "Alarm.hpp"
 
+#pragma warning(push)
+#pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
+#include <iostream>
+#pragma warning(pop)
+
 namespace kjc
 {
 	Alarm::Alarm() : _type{ Type::Unknown }
 	{
+		std::cout << "Alarm default c'tor" << std::endl;
 	}
 
 	Alarm::Alarm(Type t) : _type{ t }
 	{
+		std::cout << "Alarm value c'tor" << std::endl;
 	}
 
 	Alarm::~Alarm()
 	{
+		std::cout << "Alarm default d'tor" << std::endl;
 	}
 
 	Alarm::Type Alarm::type() const
