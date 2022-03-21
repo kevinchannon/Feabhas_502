@@ -1,5 +1,7 @@
 #include "Alarm.hpp"
 
+#include <spdlog/spdlog.h>
+
 #pragma warning(push)
 #pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
 #include <iostream>
@@ -11,17 +13,17 @@ namespace kjc
 {
 	Alarm::Alarm() : _type{ Type::Unknown }
 	{
-		std::cout << "Alarm default c'tor" << std::endl;
+		spdlog::debug("Alarm default c'tor");
 	}
 
 	Alarm::Alarm(Type t) : _type{ t }
 	{
-		std::cout << "Alarm value c'tor" << std::endl;
+		spdlog::debug("Alarm value c'tor");
 	}
 
 	Alarm::~Alarm()
 	{
-		std::cout << "Alarm default d'tor" << std::endl;
+		spdlog::debug("Alarm default d'tor");
 	}
 
 	Alarm::Type Alarm::type() const
