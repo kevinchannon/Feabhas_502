@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alarm.hpp" />
+    <ClInclude Include="AlarmGenerator.hpp" />
     <ClInclude Include="AlarmIO.hpp" />
     <ClInclude Include="AlarmPipe.hpp" />
     <ClInclude Include="pch.hpp" />

@@ -27,7 +27,7 @@ namespace kjc
 
 		Alarm& operator=(Alarm&& other);
 
-		Type type() const;
+		[[nodiscard]] Type type() const;
 
 		const char* as_string() const;
 
@@ -37,5 +37,7 @@ namespace kjc
 
 		Type _type;
 	};
+
+	Alarm make_alarm(Alarm::Type t);
 }
 

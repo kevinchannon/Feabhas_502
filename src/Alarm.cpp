@@ -80,4 +80,9 @@ namespace kjc
 
 		return name_lookup[index];
 	}
+
+	Alarm make_alarm(Alarm::Type t)
+	{
+		return Alarm{ t };
+	}
 }

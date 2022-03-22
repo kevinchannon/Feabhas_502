@@ -20,7 +20,7 @@ namespace kjc
 		PipeEmpty(std::string_view msg) : PipeException{ msg } {}
 	};
 
-	template<typename Item_T, size_t MAX_ITEM_COUNT>
+	template<typename Item_T, size_t k_max_item_count>
 	class Pipe
 	{
 	public:
@@ -46,7 +46,7 @@ namespace kjc
 			}
 		}
 
-		bool try_push(Item_t item)
+		[[nodiscard]] bool try_push(Item_t item)
 		{
 			if (is_full()) {
 				return false;
@@ -57,7 +57,7 @@ namespace kjc
 			return true;
 		}
 
-		Item_t pull()
+		[[nodiscard]] Item_t pull()
 		{
 			auto item = try_pull();
 			if (!item) {
@@ -67,21 +67,25 @@ namespace kjc
 			return std::move(*item);
 		}
 
-		std::optional<Item_t> try_pull()
+		[[nodiscard]] std::optional<Item_t> try_pull()
 		{
 			if (is_empty()) {
 				return std::nullopt;
 			}
 
-			return std::move(_items[_begin_idx++ % _items.size()]);
+			auto out = std::move(_items[_begin_idx % _items.size()]);
+			_items[_begin_idx % _items.size()] = std::nullopt;
+			++_begin_idx;
+
+			return out;
 		}
 
-		bool is_empty() const
+		[[nodiscard]] bool is_empty() const
 		{
 			return _begin_idx == _end_idx;
 		}
 
-		bool is_full() const
+		[[nodiscard]] bool is_full() const
 		{
 			return _end_idx - _begin_idx == _items.size();
 		}
