@@ -20,13 +20,6 @@
 #include "Alarm.hpp"
 #include "AlarmIO.hpp"
 
-#include <spdlog/spdlog.h>
-
-#pragma warning(push)
-#pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-#include <iostream>
-#pragma warning(pop)
-
 void wait()
 {
     int x;
@@ -37,9 +30,11 @@ int main()
 {
     spdlog::set_level(spdlog::level::debug);
 
-    const auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
+    {
+        const auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
 
-    std::cout << "Alarm: " << alarm << std::endl;
+        std::cout << "Alarm: " << alarm << std::endl;
+    }
 
     wait();
     return 0;

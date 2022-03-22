@@ -1,14 +1,5 @@
 #include "Alarm.hpp"
 
-#include <spdlog/spdlog.h>
-
-#pragma warning(push)
-#pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-#include <iostream>
-#pragma warning(pop)
-
-#include <array>
-
 namespace kjc
 {
 	Alarm::Alarm() : _type{ Type::Unknown }
