@@ -35,10 +35,13 @@ void wait()
 int main()
 {
     spdlog::set_level(spdlog::level::info);
+
+    std::mt19937_64 rng{ 2123134 }; // Arbitrary seed.
+
     try {
 
         auto pipe = kjc::AlarmPipe{};
-        auto generator = kjc::Generator{ pipe };
+        auto generator = kjc::Generator{ pipe , rng };
         auto display = kjc::Display{ pipe, std::cout };
 
         for (auto i : { 0, 1, 2, 3, 4 }) {

@@ -5,6 +5,7 @@
 namespace kjc
 {
 	class AlarmPipe;
+	class Alarm;
 
 	class Display : public Filter
 	{
@@ -14,6 +15,9 @@ namespace kjc
 		void execute() override;
 
 	private:
+
+		static const char* _get_alarm_string(const std::optional<Alarm>& a);
+
 		AlarmPipe& _pipe;
 		std::ostream& _os;
 	};

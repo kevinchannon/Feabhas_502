@@ -11,7 +11,11 @@ namespace kjc
 
 	void Display::execute()
 	{
-		const auto alarm = _pipe.try_pull();
-		_os << ( alarm ? alarm->as_string() : "NO ALARM") << '\n';
+		_os << _get_alarm_string(_pipe.try_pull()) << '\n';
+	}
+
+	const char* Display::_get_alarm_string(const std::optional<Alarm>& a)
+	{
+		return a ? a->as_string() : "NO ALARM";
 	}
 }
