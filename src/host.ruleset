@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for host" Description="Code analysis rules for host.vcxproj." ToolsVersion="17.0">
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="Microsoft.Analyzers.NativeCodeAnalysis" RuleNamespace="Microsoft.Rules.Native">
+    <Rule Id="C26440" Action="None" />
+    <Rule Id="C26455" Action="None" />
+  </Rules>
+</RuleSet>

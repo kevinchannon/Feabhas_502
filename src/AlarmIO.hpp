@@ -2,11 +2,6 @@
 
 #include "Alarm.hpp"
 
-#include <iostream>
+#include <iosfwd>
 
-std::ostream& operator<<(std::ostream& os, const kjc::Alarm& a)
-{
-	os << a.as_string();
-
-	return os;
-}
+std::ostream& operator<<(std::ostream& os, const kjc::Alarm& a);

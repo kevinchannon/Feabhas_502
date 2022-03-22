@@ -39,6 +39,12 @@ namespace kjc
 			spdlog::debug("Pipe d'tor");
 		}
 
+		Pipe(const Pipe&) = delete;
+		Pipe(Pipe&&) = delete;
+
+		Pipe& operator=(const Pipe&) = delete;
+		Pipe& operator=(Pipe&&) = delete;
+
 		void push(Item_t item)
 		{
 			if (!try_push(std::move(item))) {
@@ -52,7 +58,7 @@ namespace kjc
 				return false;
 			}
 
-			_items[_end_idx++ % _items.size()] = std::move(item);
+			gsl::at(_items, _wrapped_index(_end_idx++)) = std::move(item);
 
 			return true;
 		}
@@ -73,30 +79,37 @@ namespace kjc
 				return std::nullopt;
 			}
 
-			auto out = std::move(_items[_begin_idx % _items.size()]);
-			_items[_begin_idx % _items.size()] = std::nullopt;
+			const auto idx = _wrapped_index(_begin_idx);
+
+			auto out = std::move(gsl::at(_items, idx));
+			gsl::at(_items, idx) = std::nullopt;
 			++_begin_idx;
 
 			return out;
 		}
 
-		[[nodiscard]] bool is_empty() const
+		[[nodiscard]] bool is_empty() const noexcept
 		{
 			return _begin_idx == _end_idx;
 		}
 
-		[[nodiscard]] bool is_full() const
+		[[nodiscard]] bool is_full() const noexcept
 		{
-			return _end_idx - _begin_idx == _items.size();
+			return _end_idx - _begin_idx == gsl::narrow_cast<gsl::index>(_items.size());
 		}
 
 	private:
 
-		using ItemContainer_t = std::array<std::optional<Item_t>, MAX_ITEM_COUNT>;
+		gsl::index _wrapped_index(gsl::index idx) const noexcept
+		{
+			return gsl::narrow_cast<gsl::index>(idx % _items.size());
+		}
+
+		using ItemContainer_t = std::array<std::optional<Item_t>, k_max_item_count>;
 
 		ItemContainer_t _items;
-		size_t _begin_idx;
-		size_t _end_idx;
+		gsl::index _begin_idx;
+		gsl::index _end_idx;
 	};
 
 }

@@ -53,7 +53,7 @@ namespace kjc
 		return *this;
 	}
 
-	Alarm::Type Alarm::type() const
+	Alarm::Type Alarm::type() const noexcept
 	{
 		return _type;
 	}
@@ -65,7 +65,7 @@ namespace kjc
 	
 	const char* Alarm::_type_to_string(Type t)
 	{
-		const auto index = static_cast<size_t>(t);
+		const auto index = static_cast<gsl::index>(t);
 		if (index > static_cast<size_t>(Type::TypeCount)) {
 			return _type_to_string(Type::Unknown);
 		}
@@ -78,7 +78,7 @@ namespace kjc
 
 		static_assert(Type::TypeCount == Type(3), "Invalid type count. Check array above");
 
-		return name_lookup[index];
+		return gsl::at(name_lookup, index);
 	}
 
 	Alarm make_alarm(Alarm::Type t)

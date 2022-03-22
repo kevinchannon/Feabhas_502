@@ -27,7 +27,7 @@ namespace kjc
 
 		Alarm& operator=(Alarm&& other);
 
-		[[nodiscard]] Type type() const;
+		[[nodiscard]] Type type() const noexcept;
 
 		const char* as_string() const;
 

@@ -65,9 +65,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <CodeAnalysisRuleSet>host.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <CodeAnalysisRuleSet>host.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <CodeAnalysisRuleSet>host.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <CodeAnalysisRuleSet>host.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -78,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <CallingConvention>FastCall</CallingConvention>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -97,7 +113,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <CallingConvention>FastCall</CallingConvention>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -116,7 +132,7 @@
       <CallingConvention>FastCall</CallingConvention>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <PreprocessorDefinitions>__STDC_WANT_SECURE_LIB__</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -128,7 +144,7 @@
       <CallingConvention>FastCall</CallingConvention>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <PreprocessorDefinitions>__STDC_WANT_SECURE_LIB__</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -136,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Alarm.cpp" />
+    <ClCompile Include="AlarmIO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -153,12 +170,16 @@
     <ClInclude Include="Pipe.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="host.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\spdlog_native.2021.07.30\build\native\spdlog_native.targets" Condition="Exists('..\packages\spdlog_native.2021.07.30\build\native\spdlog_native.targets')" />
   </ImportGroup>
+  <PropertyGroup Condition="'$(Language)'=='C++'">
+    <CAExcludePath>$(SolutionDir)packages;&gt;C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees;$(CAExcludePath)</CAExcludePath>
+  </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

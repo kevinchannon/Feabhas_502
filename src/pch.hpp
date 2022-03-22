@@ -1,5 +1,7 @@
 #pragma once
 
+#include <gsl/gsl>
+
 #pragma warning(push)
 #pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
 #pragma warning(disable: 4820)	// warning C4820: 'N' bytes padding added after data member
@@ -17,11 +19,6 @@
 
 #pragma warning(push)
 #pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-
-#ifndef _DEBUG
-#pragma warning(disable: 4710)	// warning C4710: function not inlined
-#pragma warning(disable: 4711)	// warning C4711: selected for automatic inline expansion
-#endif
 
 #include <iostream>
 #pragma warning(pop)
