@@ -35,6 +35,12 @@
     <ClInclude Include="pch.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pipe.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AlarmPipe.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -17,11 +17,15 @@ namespace kjc
 		};
 
 		Alarm();
-		Alarm(Type t);
+		explicit Alarm(Type t);
+		Alarm(const Alarm& other);
+		Alarm(Alarm&& other);
 
 		~Alarm();
 
-		Alarm& operator=(const Alarm&) = delete;
+		Alarm& operator=(const Alarm& other);
+
+		Alarm& operator=(Alarm&& other);
 
 		Type type() const;
 
@@ -31,7 +35,7 @@ namespace kjc
 
 		static const char* _type_to_string(Type t);
 
-		const Type _type;
+		Type _type;
 	};
 }
 

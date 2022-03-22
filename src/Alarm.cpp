@@ -9,12 +9,48 @@ namespace kjc
 
 	Alarm::Alarm(Type t) : _type{ t }
 	{
-		spdlog::debug("Alarm value c'tor");
+		spdlog::debug("Alarm value c'tor. _type={}", _type_to_string(_type));
+	}
+
+	Alarm::Alarm(const Alarm& other)
+		: _type{ other._type }
+	{
+		spdlog::debug("Alarm copy-constructor. _type={}", _type_to_string(_type));
+	}
+
+	Alarm::Alarm(Alarm&& other)
+		: _type{ other._type }
+	{
+		spdlog::debug("Alarm move-constructor. _type={}", _type_to_string(_type));
+		other._type = Type::Unknown;
 	}
 
 	Alarm::~Alarm()
 	{
-		spdlog::debug("Alarm default d'tor");
+		spdlog::debug("Alarm d'tor");
+	}
+
+	Alarm& Alarm::operator=(const Alarm& other)
+	{
+		spdlog::debug("Alarm copy-assignment. _type={}, other._type={}", _type_to_string(_type), other._type);
+		if (this == &other) {
+			return *this;
+		}
+
+		_type = other._type;
+		return *this;
+	}
+
+	Alarm& Alarm::operator=(Alarm&& other)
+	{
+		spdlog::debug("Alarm move-assignment");
+		if (this == &other) {
+			return *this;
+		}
+
+		_type = other._type;
+		other._type = Type::Unknown;
+		return *this;
 	}
 
 	Alarm::Type Alarm::type() const

@@ -147,7 +147,9 @@
   <ItemGroup>
     <ClInclude Include="Alarm.hpp" />
     <ClInclude Include="AlarmIO.hpp" />
+    <ClInclude Include="AlarmPipe.hpp" />
     <ClInclude Include="pch.hpp" />
+    <ClInclude Include="Pipe.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -19,6 +19,7 @@
 
 #include "Alarm.hpp"
 #include "AlarmIO.hpp"
+#include "AlarmPipe.hpp"
 
 void wait()
 {
@@ -29,12 +30,34 @@ void wait()
 int main()
 {
     spdlog::set_level(spdlog::level::debug);
+    try {
 
-    {
+        spdlog::info("Creating an alarm");
+
         const auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
 
+        spdlog::info("Creating a pipe");
+
+        auto pipe = kjc::AlarmPipe<20>{};
+
+        spdlog::info("Pushing something into pipe");
+
+        pipe.push(kjc::Alarm{ kjc::Alarm::Type::Caution });
+
+        spdlog::info("Pulling from pipe");
+
+        const auto alarm_from_pipe = pipe.pull();
+
+        spdlog::info("Results:");
+
         std::cout << "Alarm: " << alarm << std::endl;
+        std::cout << "Alarm from pipe: " << alarm_from_pipe << std::endl;
     }
+    catch (const kjc::PipeException& ex) {
+        spdlog::error("Pipe failure: {}", ex.what());
+    }
+
+    spdlog::info("Waiting for exit");
 
     wait();
     return 0;
