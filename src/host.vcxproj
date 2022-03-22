@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClCompile Include="Alarm.cpp" />
     <ClCompile Include="AlarmIO.cpp" />
+    <ClCompile Include="Display.cpp" />
+    <ClCompile Include="Generator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -166,6 +168,9 @@
     <ClInclude Include="AlarmGenerator.hpp" />
     <ClInclude Include="AlarmIO.hpp" />
     <ClInclude Include="AlarmPipe.hpp" />
+    <ClInclude Include="Display.hpp" />
+    <ClInclude Include="Filter.hpp" />
+    <ClInclude Include="Generator.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Pipe.hpp" />
   </ItemGroup>

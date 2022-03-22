@@ -39,5 +39,7 @@ namespace kjc
 	};
 
 	Alarm make_alarm(Alarm::Type t);
+
+	Alarm make_random_alarm(std::mt19937_64& rng);
 }
 

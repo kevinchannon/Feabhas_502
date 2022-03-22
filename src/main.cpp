@@ -20,6 +20,8 @@
 #include "Alarm.hpp"
 #include "AlarmIO.hpp"
 #include "AlarmPipe.hpp"
+#include "Generator.hpp"
+#include "Display.hpp"
 
 #pragma warning(push)
 #pragma warning(disable: 4710)	// warning C4710: function not inlined
@@ -32,35 +34,21 @@ void wait()
 
 int main()
 {
-    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_level(spdlog::level::info);
     try {
 
-spdlog::info("Creating an alarm");
+        auto pipe = kjc::AlarmPipe{};
+        auto generator = kjc::Generator{ pipe };
+        auto display = kjc::Display{ pipe, std::cout };
 
-        const auto alarm = kjc::Alarm{ kjc::Alarm::Type::Advisory };
-
-spdlog::info("Creating a pipe");
-
-        auto pipe = kjc::AlarmPipe<20>{};
-
-spdlog::info("Pushing something into pipe");
-
-        pipe.push(make_alarm(kjc::Alarm::Type::Caution));
-
-spdlog::info("Pulling from pipe");
-
-        const auto alarm_from_pipe = pipe.pull();
-
-spdlog::info("Results:");
-
-        std::cout << "Alarm: " << alarm << std::endl;
-        std::cout << "Alarm from pipe: " << alarm_from_pipe << std::endl;
+        for (auto i : { 0, 1, 2, 3, 4 }) {
+            generator.execute();
+            display.execute();
+        }
     }
     catch (const kjc::PipeException& ex) {
         spdlog::error("Pipe failure: {}", ex.what());
     }
-
-spdlog::info("Waiting for exit");
 
     wait();
     return 0;

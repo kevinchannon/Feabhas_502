@@ -5,6 +5,5 @@
 
 namespace kjc
 {
-	template<size_t k_max_messages>
-	using AlarmPipe = Pipe<Alarm, k_max_messages>;
+	class AlarmPipe : public Pipe<Alarm, 20> {};
 }

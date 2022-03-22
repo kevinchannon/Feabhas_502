@@ -85,4 +85,9 @@ namespace kjc
 	{
 		return Alarm{ t };
 	}
+
+	Alarm make_random_alarm(std::mt19937_64& rng)
+	{
+		return Alarm{ Alarm::Type(std::uniform_int_distribution<>{0,2}(rng)) };
+	}
 }
