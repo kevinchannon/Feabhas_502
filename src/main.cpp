@@ -32,6 +32,14 @@ void wait()
 }
 #pragma warning(pop)
 
+void generate_alarms(kjc::Generator& gen, kjc::Display& disp, size_t count)
+{
+    while (count-- != 0) {
+        gen.execute();
+        disp.execute();
+    }
+}
+
 int main()
 {
     spdlog::set_level(spdlog::level::info);
@@ -44,10 +52,7 @@ int main()
         auto generator = kjc::Generator{ pipe , rng };
         auto display = kjc::Display{ pipe, std::cout };
 
-        for (auto i : { 0, 1, 2, 3, 4 }) {
-            generator.execute();
-            display.execute();
-        }
+        generate_alarms(generator, display, 30);
     }
     catch (const kjc::PipeException& ex) {
         spdlog::error("Pipe failure: {}", ex.what());
