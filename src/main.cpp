@@ -52,7 +52,7 @@ int main()
         auto generator = kjc::Generator{ pipe , rng };
         auto display = kjc::Display{ pipe, std::cout };
 
-        generate_alarms(generator, display, 1);
+        generate_alarms(generator, display, 10);
     }
     catch (const kjc::PipeException& ex) {
         spdlog::error("Pipe failure: {}", ex.what());

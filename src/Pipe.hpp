@@ -5,19 +5,19 @@ namespace kjc
 	class PipeException : public std::runtime_error
 	{
 	public:
-		PipeException(std::string_view msg) : std::runtime_error{ msg.data() } {}
+		explicit PipeException(std::string_view msg) : std::runtime_error{ msg.data() } {}
 	};
 
 	class PipeFull : public PipeException
 	{
 	public:
-		PipeFull(std::string_view msg) : PipeException{ msg } {}
+		explicit PipeFull(std::string_view msg) : PipeException{ msg } {}
 	};
 
 	class PipeEmpty : public PipeException
 	{
 	public:
-		PipeEmpty(std::string_view msg) : PipeException{ msg } {}
+		explicit PipeEmpty(std::string_view msg) : PipeException{ msg } {}
 	};
 
 	template<typename Item_T, size_t k_max_item_count>
