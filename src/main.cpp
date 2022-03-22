@@ -23,22 +23,35 @@
 #include "Generator.hpp"
 #include "Display.hpp"
 
-#pragma warning(push)
-#pragma warning(disable: 4710)	// warning C4710: function not inlined
-void wait()
-{
-    int x;
-    std::cin >> x;
-}
-#pragma warning(pop)
+///////////////////////////////////////////////////////////////////////////////
 
-void generate_alarms(kjc::Generator& gen, kjc::Display& disp, size_t count)
+class PipelineRunner
 {
-    while (count-- != 0) {
-        gen.execute();
-        disp.execute();
+public:
+    PipelineRunner(kjc::Generator& gen, kjc::Display& disp)
+        : _gen{gen}
+        , _disp{disp}
+    {}
+
+    PipelineRunner(const PipelineRunner&) = delete;
+    PipelineRunner(PipelineRunner&&) = delete;
+    PipelineRunner& operator=(const PipelineRunner&) = delete;
+    PipelineRunner& operator=(PipelineRunner&&) = delete;
+
+    void run(size_t count)
+    {
+        while (count-- != 0) {
+            _gen.execute();
+            _disp.execute();
+        }
     }
-}
+
+private:
+    kjc::Generator& _gen;
+    kjc::Display& _disp;
+};
+
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
@@ -52,12 +65,13 @@ int main()
         auto generator = kjc::Generator{ pipe , rng };
         auto display = kjc::Display{ pipe, std::cout };
 
-        generate_alarms(generator, display, 10);
+        PipelineRunner{ generator, display }.run(10);
     }
     catch (const kjc::PipeException& ex) {
         spdlog::error("Pipe failure: {}", ex.what());
     }
 
-    wait();
     return 0;
 }
+
+///////////////////////////////////////////////////////////////////////////////
