@@ -11,6 +11,11 @@ namespace kjc
 	public:
 		Generator(AlarmPipe& pipe, std::mt19937_64& rng);
 
+		Generator(const Generator&) = delete;
+		Generator(Generator&&) = delete;
+		Generator& operator=(const Generator&) = delete;
+		Generator& operator=(Generator&&) = delete;
+
 		void execute() override;
 
 	private:

@@ -27,16 +27,14 @@ namespace kjc
 
 		using Item_t = Item_T;
 
-		Pipe()
+		Pipe() noexcept
 			: _begin_idx{0}
 			, _end_idx{0}
 		{
-			spdlog::debug("Pipe default c'tor");
 		}
 
-		~Pipe()
+		~Pipe() noexcept
 		{
-			spdlog::debug("Pipe d'tor");
 		}
 
 		Pipe(const Pipe&) = delete;

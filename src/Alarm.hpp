@@ -16,16 +16,15 @@ namespace kjc
 			TypeCount
 		};
 
-		Alarm();
-		explicit Alarm(Type t);
-		Alarm(const Alarm& other);
-		Alarm(Alarm&& other);
+		Alarm() noexcept;
+		explicit Alarm(Type t) noexcept;
+		Alarm(const Alarm& other) noexcept;
+		Alarm(Alarm&& other) noexcept;
 
 		~Alarm();
 
-		Alarm& operator=(const Alarm& other);
-
-		Alarm& operator=(Alarm&& other);
+		Alarm& operator=(const Alarm& other) noexcept;
+		Alarm& operator=(Alarm&& other) noexcept;
 
 		[[nodiscard]] Type type() const noexcept;
 

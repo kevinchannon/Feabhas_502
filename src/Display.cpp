@@ -11,7 +11,7 @@ namespace kjc
 
 	void Display::execute()
 	{
-		_os << _get_alarm_string(_pipe.try_pull()) << '\n';
+		_os << _get_alarm_string(_pipe.pull()) << '\n';
 	}
 
 	const char* Display::_get_alarm_string(const std::optional<Alarm>& a)

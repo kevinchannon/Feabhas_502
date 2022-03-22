@@ -2,37 +2,31 @@
 
 namespace kjc
 {
-	Alarm::Alarm() : _type{ Type::Unknown }
+	Alarm::Alarm() noexcept : _type{ Type::Unknown }
 	{
-		spdlog::debug("Alarm default c'tor");
 	}
 
-	Alarm::Alarm(Type t) : _type{ t }
+	Alarm::Alarm(Type t) noexcept : _type{ t }
 	{
-		spdlog::debug("Alarm value c'tor. _type={}", _type_to_string(_type));
 	}
 
-	Alarm::Alarm(const Alarm& other)
+	Alarm::Alarm(const Alarm& other) noexcept
 		: _type{ other._type }
 	{
-		spdlog::debug("Alarm copy-constructor. _type={}", _type_to_string(_type));
 	}
 
-	Alarm::Alarm(Alarm&& other)
+	Alarm::Alarm(Alarm&& other) noexcept
 		: _type{ other._type }
 	{
-		spdlog::debug("Alarm move-constructor. _type={}", _type_to_string(_type));
 		other._type = Type::Unknown;
 	}
 
-	Alarm::~Alarm()
+	Alarm::~Alarm() noexcept
 	{
-		spdlog::debug("Alarm d'tor");
 	}
 
-	Alarm& Alarm::operator=(const Alarm& other)
+	Alarm& Alarm::operator=(const Alarm& other) noexcept
 	{
-		spdlog::debug("Alarm copy-assignment. _type={}, other._type={}", _type_to_string(_type), other._type);
 		if (this == &other) {
 			return *this;
 		}
@@ -41,9 +35,8 @@ namespace kjc
 		return *this;
 	}
 
-	Alarm& Alarm::operator=(Alarm&& other)
+	Alarm& Alarm::operator=(Alarm&& other) noexcept
 	{
-		spdlog::debug("Alarm move-assignment");
 		if (this == &other) {
 			return *this;
 		}
@@ -88,6 +81,6 @@ namespace kjc
 
 	Alarm make_random_alarm(std::mt19937_64& rng)
 	{
-		return Alarm{ Alarm::Type(std::uniform_int_distribution<>{0,2}(rng)) };
+		return Alarm{ Alarm::Type{ std::uniform_int_distribution<>{0, static_cast<int>(Alarm::Type::TypeCount) - 1}(rng)} };
 	}
 }
