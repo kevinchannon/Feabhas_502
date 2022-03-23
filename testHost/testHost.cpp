@@ -68,7 +68,7 @@ namespace testHost
 
 		TEST_METHOD(EmplacingAlarmsWorks)
 		{
-			std::mt19937_64 rng{ 98324 };
+			std::mt19937_64 rng{ 983234234 };
 
 			auto alarms = AlarmList{};
 			kjc::repeat([&alarms, &rng]() { alarms.emplace(make_random_alarm(rng).type()); }, 10);
