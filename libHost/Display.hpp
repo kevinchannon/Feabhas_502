@@ -2,6 +2,8 @@
 
 #include "Filter.hpp"
 
+#include <iosfwd>
+
 namespace kjc
 {
 	class AlarmPipe;

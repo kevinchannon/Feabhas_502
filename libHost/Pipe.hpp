@@ -1,5 +1,12 @@
 #pragma once
 
+#include <gsl/gsl>
+
+#include <stdexcept>
+#include <string>
+#include <optional>
+#include <array>
+
 namespace kjc
 {
 	class PipeException : public std::runtime_error

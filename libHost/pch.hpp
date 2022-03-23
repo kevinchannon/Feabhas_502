@@ -25,3 +25,10 @@
 
 #include <iostream>
 #pragma warning(pop)
+
+#include <stdexcept>
+#include <string_view>
+#include <optional>
+#include <array>
+#include <random>
+#include <ranges>

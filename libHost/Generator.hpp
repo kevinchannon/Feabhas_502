@@ -2,6 +2,8 @@
 
 #include "Filter.hpp"
 
+#include <random>
+
 namespace kjc
 {
 	class AlarmPipe;
