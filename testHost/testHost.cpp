@@ -1,6 +1,10 @@
 
 #include <Alarm.hpp>
 #include <Pipe.hpp>
+#include <Generator.hpp>
+#include <AlarmPipe.hpp>
+#include <AlarmList.hpp>
+
 #include <Repeat.hpp>
 
 #include "CppUnitTest.h"
@@ -44,6 +48,18 @@ namespace testHost
 		{
 			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(static_cast<int>(Alarm::Type::TypeCount) + 1)}.as_string());
 			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(-2) }.as_string());
+		}
+	};
+
+	TEST_CLASS(TestAlarmList)
+	{
+	public:
+		TEST_METHOD(AddingASingleAlarmWorks)
+		{
+			auto alarms = AlarmList{};
+			alarms.add(Alarm{ Alarm::Type::Advisory });
+
+			Assert::AreEqual(size_t{ 1 }, alarms.size());
 		}
 	};
 

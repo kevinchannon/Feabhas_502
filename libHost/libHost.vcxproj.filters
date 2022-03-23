@@ -51,6 +51,9 @@
     <ClInclude Include="Repeat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AlarmList.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

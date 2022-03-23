@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="Alarm.hpp" />
     <ClInclude Include="AlarmIO.hpp" />
+    <ClInclude Include="AlarmList.hpp" />
     <ClInclude Include="AlarmPipe.hpp" />
     <ClInclude Include="api.h" />
     <ClInclude Include="Display.hpp" />
