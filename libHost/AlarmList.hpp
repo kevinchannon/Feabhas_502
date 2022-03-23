@@ -6,7 +6,7 @@
 
 namespace kjc
 {
-class AlarmList
+class AlarmList : protected std::vector<Alarm>
 {
 public:
 	AlarmList() noexcept = default;
@@ -18,30 +18,19 @@ public:
 	AlarmList(AlarmList&&) = default;
 	AlarmList& operator=(AlarmList&&) = default;
 
-	[[nodiscard]] size_t size() const noexcept { return _alarms.size(); }
+	using std::vector<Alarm>::size;
+	using std::vector<Alarm>::reserve;
+	using std::vector<Alarm>::begin;
+	using std::vector<Alarm>::end;
 
 	void add(Alarm a)
 	{
-		_alarms.push_back(std::move(a));
+		push_back(std::move(a));
 	}
 
 	void emplace(Alarm::Type t)
 	{
-		_alarms.emplace_back(std::forward<Alarm::Type>(t));
+		emplace_back(std::forward<Alarm::Type>(t));
 	}
-
-	void reserve(size_t how_many)
-	{
-		_alarms.reserve(how_many);
-	}
-
-	auto begin() const { return _alarms.cbegin(); }
-	auto begin() { return _alarms.begin(); }
-
-	auto end() const { return _alarms.cend(); }
-	auto end() { return _alarms.cend(); }
-
-private:
-	std::vector<Alarm> _alarms;
 };
 }
