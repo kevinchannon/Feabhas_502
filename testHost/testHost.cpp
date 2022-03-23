@@ -121,6 +121,14 @@ namespace testHost
 
 			Assert::AreEqual(gsl::narrow_cast<ptrdiff_t>(alarms.size()), std::distance(alarms.begin(), alarms.end()));
 		}
+
+		TEST_METHOD(ReserveDoesNotChangeReportedSize)
+		{
+			auto alarms = AlarmList{};
+			alarms.reserve(10);
+
+			Assert::AreEqual(size_t{ 0 }, alarms.size());
+		}
 	};
 
 	TEST_CLASS(TestPipe)

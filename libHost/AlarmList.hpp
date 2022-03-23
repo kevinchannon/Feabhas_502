@@ -29,6 +29,11 @@ public:
 		_alarms.emplace_back(std::forward<Alarm::Type>(t));
 	}
 
+	void reserve(size_t how_many)
+	{
+		_alarms.reserve(how_many);
+	}
+
 	auto begin() const { return _alarms.cbegin(); }
 	auto begin() { return _alarms.begin(); }
 
