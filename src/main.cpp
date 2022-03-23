@@ -17,36 +17,20 @@
 // -----------------------------------------------------------------------------
 
 
-#include "Alarm.hpp"
-#include "AlarmIO.hpp"
 #include "AlarmPipe.hpp"
 #include "Generator.hpp"
 #include "Display.hpp"
+#include "Pipeline.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class FilterExecutor
+template<typename Fn_T>
+void repeat(Fn_T fn, size_t count)
 {
-public:
-    FilterExecutor(std::vector<kjc::Filter*> filters)
-        : _filters{ filters }
-    {}
-
-    FilterExecutor(const FilterExecutor&) = delete;
-    FilterExecutor(FilterExecutor&&) = delete;
-    FilterExecutor& operator=(const FilterExecutor&) = delete;
-    FilterExecutor& operator=(FilterExecutor&&) = delete;
-
-    void run(size_t count)
-    {
-        while(count--) {
-            std::ranges::for_each(_filters, [](auto&& f) { f->execute(); });
-        }
+    while (count--) {
+        fn();
     }
-
-private:
-    std::vector<kjc::Filter*> _filters;
-};
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -57,12 +41,15 @@ int main()
     std::mt19937_64 rng{ 2123134 }; // Arbitrary seed.
 
     try {
-
         auto pipe = kjc::AlarmPipe{};
         auto generator = kjc::Generator{ pipe , rng };
         auto display = kjc::Display{ pipe, std::cout };
+        auto pipeline = kjc::Pipeline{};
 
-        FilterExecutor{ {&generator, &display} }.run(10);
+        pipeline.add(generator);
+        pipeline.add(display);
+
+        repeat([&pipeline]() { pipeline.run(); }, 10);
     }
     catch (const kjc::PipeException& ex) {
         spdlog::error("Pipe failure: {}", ex.what());
