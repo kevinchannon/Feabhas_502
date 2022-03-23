@@ -5,7 +5,7 @@
 
 namespace kjc
 {
-	class AlarmPipe : public Pipe<Alarm, 20>
+	class AlarmPipe : Pipe<Alarm, 20>
 	{
 	public:
 		AlarmPipe();
@@ -13,5 +13,10 @@ namespace kjc
 		AlarmPipe(AlarmPipe&&) = delete;
 		AlarmPipe& operator=(const AlarmPipe&) = delete;
 		AlarmPipe& operator=(AlarmPipe&&) = delete;
+
+		using Base_t = Pipe<Alarm, 20>;
+
+		using Base_t::pull;
+		using Base_t::push;
 	};
 }

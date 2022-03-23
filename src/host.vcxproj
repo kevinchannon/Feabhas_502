@@ -94,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <CallingConvention>FastCall</CallingConvention>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -114,7 +114,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <CallingConvention>FastCall</CallingConvention>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -134,7 +134,7 @@
       <CallingConvention>FastCall</CallingConvention>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <PreprocessorDefinitions>__STDC_WANT_SECURE_LIB__</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -150,7 +150,7 @@
       <CallingConvention>FastCall</CallingConvention>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <PreprocessorDefinitions>__STDC_WANT_SECURE_LIB__</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;C:\Users\CAMKC9\dev\repos\training\cmake-host\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -194,7 +194,7 @@
     <Import Project="..\packages\spdlog_native.2021.07.30\build\native\spdlog_native.targets" Condition="Exists('..\packages\spdlog_native.2021.07.30\build\native\spdlog_native.targets')" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Language)'=='C++'">
-    <CAExcludePath>$(SolutionDir)packages;&gt;C:\Users\CAMKC9\dev\repos\vcpkg\buildtrees;$(CAExcludePath)</CAExcludePath>
+    <CAExcludePath>$(SolutionDir)packages;$(SolutionDir)..\..\vcpkg\buildtrees;$(CAExcludePath)</CAExcludePath>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
