@@ -1,5 +1,6 @@
 
 #include <Alarm.hpp>
+#include <Pipe.hpp>
 
 #include "CppUnitTest.h"
 
@@ -42,6 +43,20 @@ namespace testHost
 		{
 			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(static_cast<int>(Alarm::Type::TypeCount) + 1)}.as_string());
 			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(-2) }.as_string());
+		}
+	};
+
+	TEST_CLASS(TestPipe)
+	{
+	public:
+		TEST_METHOD(IsEmptyOnConstruction)
+		{
+			Assert::IsTrue(Pipe<int, 10>{}.is_empty());
+		}
+
+		TEST_METHOD(IsNotFullOnConstruction)
+		{
+			Assert::IsFalse(Pipe<int, 10>{}.is_full());
 		}
 	};
 }
