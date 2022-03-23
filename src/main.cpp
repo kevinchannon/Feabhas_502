@@ -21,16 +21,11 @@
 #include "Generator.hpp"
 #include "Display.hpp"
 #include "Pipeline.hpp"
+#include "Repeat.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 
-template<typename Fn_T>
-void repeat(Fn_T fn, size_t count)
-{
-	while (count--) {
-		fn();
-	}
-}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +44,7 @@ int main()
 		pipeline.add(generator);
 		pipeline.add(display);
 
-		repeat([&pipeline]() { pipeline.run(); }, 10);
+		kjc::repeat([&pipeline]() { pipeline.run(); }, 10);
 	}
 	catch (const kjc::PipeException& ex) {
 		spdlog::error("Pipe failure: {}", ex.what());

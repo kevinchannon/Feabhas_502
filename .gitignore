@@ -30,3 +30,5 @@ out/
 /packages
 /libHost/x64/Debug
 /testHost/x64/Debug
+/libHost/x64/Release
+/testHost/x64/Release
