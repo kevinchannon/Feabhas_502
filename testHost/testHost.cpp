@@ -9,6 +9,8 @@
 
 #include "CppUnitTest.h"
 
+#include <random>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 template<>
@@ -54,12 +56,24 @@ namespace testHost
 	TEST_CLASS(TestAlarmList)
 	{
 	public:
-		TEST_METHOD(AddingASingleAlarmWorks)
+		TEST_METHOD(AddingAlarmsWorks)
 		{
-			auto alarms = AlarmList{};
-			alarms.add(Alarm{ Alarm::Type::Advisory });
+			std::mt19937_64 rng{ 98324 };
 
-			Assert::AreEqual(size_t{ 1 }, alarms.size());
+			auto alarms = AlarmList{};
+			kjc::repeat([&alarms, &rng]() { alarms.add(make_random_alarm(rng)); }, 10);
+
+			Assert::AreEqual(size_t{ 10 }, alarms.size());
+		}
+
+		TEST_METHOD(EmplacingAlarmsWorks)
+		{
+			std::mt19937_64 rng{ 98324 };
+
+			auto alarms = AlarmList{};
+			kjc::repeat([&alarms, &rng]() { alarms.emplace(make_random_alarm(rng).type()); }, 10);
+
+			Assert::AreEqual(size_t{ 10 }, alarms.size());
 		}
 	};
 

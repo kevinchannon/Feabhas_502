@@ -18,6 +18,11 @@ public:
 		_alarms.push_back(std::move(a));
 	}
 
+	void emplace(Alarm::Type t)
+	{
+		_alarms.emplace_back(std::forward<Alarm::Type>(t));
+	}
+
 private:
 	std::vector<Alarm> _alarms;
 };
