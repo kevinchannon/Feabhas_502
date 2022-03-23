@@ -59,7 +59,7 @@ namespace kjc
 	const wchar_t* Alarm::type_to_string(Type t)
 	{
 		const auto index = static_cast<gsl::index>(t);
-		if (index > static_cast<size_t>(Type::TypeCount)) {
+		if (index > static_cast<gsl::index>(Type::TypeCount) || index < 0) {
 			return type_to_string(Type::Unknown);
 		}
 
