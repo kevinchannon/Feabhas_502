@@ -31,3 +31,4 @@
 #include <optional>
 #include <array>
 #include <random>
+#include <ranges>

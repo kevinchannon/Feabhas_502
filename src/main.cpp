@@ -25,30 +25,27 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class PipelineRunner
+class FilterExecutor
 {
 public:
-    PipelineRunner(kjc::Generator& gen, kjc::Display& disp)
-        : _gen{gen}
-        , _disp{disp}
+    FilterExecutor(std::vector<kjc::Filter*> filters)
+        : _filters{ filters }
     {}
 
-    PipelineRunner(const PipelineRunner&) = delete;
-    PipelineRunner(PipelineRunner&&) = delete;
-    PipelineRunner& operator=(const PipelineRunner&) = delete;
-    PipelineRunner& operator=(PipelineRunner&&) = delete;
+    FilterExecutor(const FilterExecutor&) = delete;
+    FilterExecutor(FilterExecutor&&) = delete;
+    FilterExecutor& operator=(const FilterExecutor&) = delete;
+    FilterExecutor& operator=(FilterExecutor&&) = delete;
 
     void run(size_t count)
     {
-        while (count-- != 0) {
-            _gen.execute();
-            _disp.execute();
+        while(count--) {
+            std::ranges::for_each(_filters, [](auto&& f) { f->execute(); });
         }
     }
 
 private:
-    kjc::Generator& _gen;
-    kjc::Display& _disp;
+    std::vector<kjc::Filter*> _filters;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -65,7 +62,7 @@ int main()
         auto generator = kjc::Generator{ pipe , rng };
         auto display = kjc::Display{ pipe, std::cout };
 
-        PipelineRunner{ generator, display }.run(10);
+        FilterExecutor{ {&generator, &display} }.run(10);
     }
     catch (const kjc::PipeException& ex) {
         spdlog::error("Pipe failure: {}", ex.what());

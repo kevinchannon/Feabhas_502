@@ -98,7 +98,7 @@ namespace kjc
 
 	private:
 
-		gsl::index _wrapped_index(gsl::index idx) const noexcept
+		[[nodiscard]] gsl::index _wrapped_index(gsl::index idx) const noexcept
 		{
 			return gsl::narrow_cast<gsl::index>(idx % _items.size());
 		}
