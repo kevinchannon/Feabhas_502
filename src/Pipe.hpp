@@ -28,8 +28,8 @@ namespace kjc
 		using Item_t = Item_T;
 
 		Pipe() noexcept
-			: _begin_idx{0}
-			, _end_idx{0}
+			: _begin_idx{ 0 }
+			, _end_idx{ 0 }
 		{
 		}
 
@@ -46,7 +46,7 @@ namespace kjc
 		void push(Item_t item)
 		{
 			if (!try_push(std::move(item))) {
-				throw PipeFull{"Failed to push into pipe: pipe full"};
+				throw PipeFull{ "Failed to push into pipe: pipe full" };
 			}
 		}
 

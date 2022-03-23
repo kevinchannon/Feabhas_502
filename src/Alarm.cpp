@@ -55,7 +55,7 @@ namespace kjc
 	{
 		return _type_to_string(_type);
 	}
-	
+
 	const char* Alarm::_type_to_string(Type t)
 	{
 		const auto index = static_cast<gsl::index>(t);

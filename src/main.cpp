@@ -27,35 +27,35 @@
 template<typename Fn_T>
 void repeat(Fn_T fn, size_t count)
 {
-    while (count--) {
-        fn();
-    }
+	while (count--) {
+		fn();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    spdlog::set_level(spdlog::level::info);
+	spdlog::set_level(spdlog::level::info);
 
-    std::mt19937_64 rng{ 2123134 }; // Arbitrary seed.
+	std::mt19937_64 rng{ 2123134 }; // Arbitrary seed.
 
-    try {
-        auto pipe = kjc::AlarmPipe{};
-        auto generator = kjc::Generator{ pipe , rng };
-        auto display = kjc::Display{ pipe, std::cout };
-        auto pipeline = kjc::Pipeline{};
+	try {
+		auto pipe = kjc::AlarmPipe{};
+		auto generator = kjc::Generator{ pipe , rng };
+		auto display = kjc::Display{ pipe, std::cout };
+		auto pipeline = kjc::Pipeline{};
 
-        pipeline.add(generator);
-        pipeline.add(display);
+		pipeline.add(generator);
+		pipeline.add(display);
 
-        repeat([&pipeline]() { pipeline.run(); }, 10);
-    }
-    catch (const kjc::PipeException& ex) {
-        spdlog::error("Pipe failure: {}", ex.what());
-    }
+		repeat([&pipeline]() { pipeline.run(); }, 10);
+	}
+	catch (const kjc::PipeException& ex) {
+		spdlog::error("Pipe failure: {}", ex.what());
+	}
 
-    return 0;
+	return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

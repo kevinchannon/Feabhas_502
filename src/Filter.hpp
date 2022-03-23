@@ -4,7 +4,7 @@ namespace kjc
 {
 	class Filter
 	{
-	public :
+	public:
 		virtual ~Filter() = default;
 
 		virtual void execute() = 0;
