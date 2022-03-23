@@ -7,10 +7,6 @@
 
 #include <Repeat.hpp>
 
-#include "CppUnitTest.h"
-
-#include <random>
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 template<>
@@ -22,6 +18,16 @@ std::wstring __cdecl Microsoft::VisualStudio::CppUnitTestFramework::ToString<enu
 namespace testHost
 {
 	using namespace kjc;
+
+	std::vector<Alarm> make_random_alarms(size_t how_many, uint64_t random_seed)
+	{
+		std::mt19937_64 rng{ random_seed };
+
+		auto out = std::vector<Alarm>{};
+		kjc::repeat([&out, &rng]() { out.push_back(make_random_alarm(rng)); }, how_many);
+
+		return out;
+	}
 
 	TEST_CLASS(TestAlarm)
 	{
@@ -58,20 +64,22 @@ namespace testHost
 	public:
 		TEST_METHOD(AddingAlarmsWorks)
 		{
-			std::mt19937_64 rng{ 98324 };
-
-			auto alarms = AlarmList{};
-			kjc::repeat([&alarms, &rng]() { alarms.add(make_random_alarm(rng)); }, 10);
+			auto random_alarms = make_random_alarms(10, 23408234);
+			auto alarms = std::accumulate(random_alarms.begin(), random_alarms.end(), AlarmList{}, [](auto&& alarm_list, auto&& alarm) {
+				alarm_list.add(alarm);
+				return std::move(alarm_list);
+			});
 
 			Assert::AreEqual(size_t{ 10 }, alarms.size());
 		}
 
 		TEST_METHOD(EmplacingAlarmsWorks)
 		{
-			std::mt19937_64 rng{ 983234234 };
-
-			auto alarms = AlarmList{};
-			kjc::repeat([&alarms, &rng]() { alarms.emplace(make_random_alarm(rng).type()); }, 10);
+			auto random_alarms = make_random_alarms(10, 99023492 );
+			auto alarms = std::accumulate(random_alarms.begin(), random_alarms.end(), AlarmList{}, [](auto&& alarm_list, auto&& alarm) {
+				alarm_list.emplace(alarm.type());
+				return std::move(alarm_list); 
+			});
 
 			Assert::AreEqual(size_t{ 10 }, alarms.size());
 		}
