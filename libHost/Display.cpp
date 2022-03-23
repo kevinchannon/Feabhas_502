@@ -4,7 +4,7 @@
 
 namespace kjc
 {
-	Display::Display(AlarmPipe& pipe, std::ostream& os)
+	Display::Display(AlarmPipe& pipe, std::wostream& os)
 		: _pipe{ pipe }
 		, _os{ os }
 	{}
@@ -14,8 +14,8 @@ namespace kjc
 		_os << _get_alarm_string(_pipe.pull()) << '\n';
 	}
 
-	const char* Display::_get_alarm_string(const std::optional<Alarm>& a)
+	const wchar_t* Display::_get_alarm_string(const std::optional<Alarm>& a)
 	{
-		return a ? a->as_string() : "NO ALARM";
+		return a ? a->as_string() : L"NO ALARM";
 	}
 }

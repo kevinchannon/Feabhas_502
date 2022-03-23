@@ -12,7 +12,7 @@ namespace kjc
 	class Display : public Filter
 	{
 	public:
-		Display(AlarmPipe& pipe, std::ostream& os);
+		Display(AlarmPipe& pipe, std::wostream& os);
 
 		Display(const Display&) = delete;
 		Display(Display&&) = delete;
@@ -23,9 +23,9 @@ namespace kjc
 
 	private:
 
-		static const char* _get_alarm_string(const std::optional<Alarm>& a);
+		static const wchar_t* _get_alarm_string(const std::optional<Alarm>& a);
 
 		AlarmPipe& _pipe;
-		std::ostream& _os;
+		std::wostream& _os;
 	};
 }

@@ -43,7 +43,7 @@ int main()
 	try {
 		auto pipe = kjc::AlarmPipe{};
 		auto generator = kjc::Generator{ pipe , rng };
-		auto display = kjc::Display{ pipe, std::cout };
+		auto display = kjc::Display{ pipe, std::wcout };
 		auto pipeline = kjc::Pipeline{};
 
 		pipeline.add(generator);

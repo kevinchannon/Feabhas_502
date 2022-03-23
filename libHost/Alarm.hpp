@@ -18,6 +18,8 @@ namespace kjc
 			TypeCount
 		};
 
+		[[nodiscard]] static const wchar_t* type_to_string(Type t);
+
 		Alarm() noexcept;
 		explicit Alarm(Type t) noexcept;
 		Alarm(const Alarm& other) noexcept;
@@ -30,11 +32,9 @@ namespace kjc
 
 		[[nodiscard]] Type type() const noexcept;
 
-		[[nodiscard]] const char* as_string() const;
+		[[nodiscard]] const wchar_t* as_string() const;
 
 	private:
-
-		[[nodiscard]] static const char* _type_to_string(Type t);
 
 		Type _type;
 	};

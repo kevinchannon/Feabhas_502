@@ -51,22 +51,22 @@ namespace kjc
 		return _type;
 	}
 
-	const char* Alarm::as_string() const
+	const wchar_t* Alarm::as_string() const
 	{
-		return _type_to_string(_type);
+		return type_to_string(_type);
 	}
 
-	const char* Alarm::_type_to_string(Type t)
+	const wchar_t* Alarm::type_to_string(Type t)
 	{
 		const auto index = static_cast<gsl::index>(t);
 		if (index > static_cast<size_t>(Type::TypeCount)) {
-			return _type_to_string(Type::Unknown);
+			return type_to_string(Type::Unknown);
 		}
 
 		static constexpr auto name_lookup = std::array{
-			"Warning",
-			"Caution",
-			"Advisory"
+			L"Warning",
+			L"Caution",
+			L"Advisory"
 		};
 
 		static_assert(Type::TypeCount == Type(3), "Invalid type count. Check array above");
