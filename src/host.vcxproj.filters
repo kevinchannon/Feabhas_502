@@ -56,9 +56,6 @@
     <ClInclude Include="AlarmPipe.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AlarmGenerator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Generator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
