@@ -1,5 +1,7 @@
 #pragma once
 
+#include <random>
+
 namespace kjc
 {
 	class Alarm
@@ -21,7 +23,7 @@ namespace kjc
 		Alarm(const Alarm& other) noexcept;
 		Alarm(Alarm&& other) noexcept;
 
-		~Alarm();
+		~Alarm() noexcept;
 
 		Alarm& operator=(const Alarm& other) noexcept;
 		Alarm& operator=(Alarm&& other) noexcept;
