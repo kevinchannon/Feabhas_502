@@ -46,6 +46,16 @@ namespace kjc
 		return *this;
 	}
 
+	bool Alarm::operator==(const Alarm& other) const noexcept
+	{
+		return _type == other.type();
+	}
+
+	bool Alarm::operator!=(const Alarm& other) const noexcept
+	{
+		return !(*this == other);
+	}
+
 	Alarm::Type Alarm::type() const noexcept
 	{
 		return _type;

@@ -29,6 +29,12 @@ public:
 		_alarms.emplace_back(std::forward<Alarm::Type>(t));
 	}
 
+	auto begin() const { return _alarms.cbegin(); }
+	auto begin() { return _alarms.begin(); }
+
+	auto end() const { return _alarms.cend(); }
+	auto end() { return _alarms.cend(); }
+
 private:
 	std::vector<Alarm> _alarms;
 };

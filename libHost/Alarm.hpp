@@ -31,6 +31,9 @@ namespace kjc
 		Alarm& operator=(const Alarm& other) noexcept;
 		Alarm& operator=(Alarm&& other) noexcept;
 
+		bool operator==(const Alarm& other) const noexcept;
+		bool operator!=(const Alarm& other) const noexcept;
+
 		[[nodiscard]] Type type() const noexcept;
 
 		[[nodiscard]] const wchar_t* as_string() const;

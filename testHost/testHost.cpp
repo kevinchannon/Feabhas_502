@@ -15,6 +15,12 @@ std::wstring __cdecl Microsoft::VisualStudio::CppUnitTestFramework::ToString<enu
 	return kjc::Alarm::type_to_string(t);
 }
 
+template<>
+std::wstring __cdecl Microsoft::VisualStudio::CppUnitTestFramework::ToString<class kjc::Alarm>(const class kjc::Alarm& a)
+{
+	return a.as_string();
+}
+
 namespace testHost
 {
 	using namespace kjc;
@@ -25,6 +31,16 @@ namespace testHost
 
 		auto out = std::vector<Alarm>{};
 		kjc::repeat([&out, &rng]() { out.push_back(make_random_alarm(rng)); }, how_many);
+
+		return out;
+	}
+
+	AlarmList make_random_alarm_list(size_t how_many, uint64_t random_seed)
+	{
+		std::mt19937_64 rng{ random_seed };
+
+		auto out = AlarmList{};
+		kjc::repeat([&out, &rng]() { out.add(make_random_alarm(rng)); }, how_many);
 
 		return out;
 	}
@@ -82,6 +98,28 @@ namespace testHost
 			});
 
 			Assert::AreEqual(size_t{ 10 }, alarms.size());
+		}
+
+		TEST_METHOD(BeginPointsToTheFirstAlarm)
+		{
+			for (auto t : { Alarm::Type::Advisory, Alarm::Type::Caution, Alarm::Type::Warning }) {
+				auto alarms = AlarmList{};
+				alarms.emplace(t);
+
+				// Add some other alarms to the list, so that we know that there's more than one element in it.
+				alarms.emplace(Alarm::Type::Unknown);
+				alarms.emplace(Alarm::Type::Unknown);
+				alarms.emplace(Alarm::Type::Unknown);
+
+				Assert::AreEqual(Alarm{ t }, *alarms.begin());
+			}
+		}
+
+		TEST_METHOD(BeginAndEndCanBeUsedToIterateAlarmList)
+		{
+			const auto alarms = make_random_alarm_list(10, 123 );
+
+			Assert::AreEqual(gsl::narrow_cast<ptrdiff_t>(alarms.size()), std::distance(alarms.begin(), alarms.end()));
 		}
 	};
 
