@@ -30,17 +30,17 @@ namespace kjc
 
 		[[nodiscard]] Type type() const noexcept;
 
-		const char* as_string() const;
+		[[nodiscard]] const char* as_string() const;
 
 	private:
 
-		static const char* _type_to_string(Type t);
+		[[nodiscard]] static const char* _type_to_string(Type t);
 
 		Type _type;
 	};
 
-	Alarm make_alarm(Alarm::Type t);
+	[[nodiscard]] Alarm make_alarm(Alarm::Type t);
 
-	Alarm make_random_alarm(std::mt19937_64& rng);
+	[[nodiscard]] Alarm make_random_alarm(std::mt19937_64& rng);
 }
 
