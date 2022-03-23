@@ -19,6 +19,7 @@ namespace kjc
 		};
 
 		[[nodiscard]] static const wchar_t* type_to_string(Type t);
+		[[nodiscard]] static constexpr bool type_is_valid(Type t);
 
 		Alarm() noexcept;
 		explicit Alarm(Type t) noexcept;

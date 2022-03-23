@@ -37,5 +37,11 @@ namespace testHost
 			Assert::AreEqual(L"Caution", Alarm{ Alarm::Type::Caution }.as_string());
 			Assert::AreEqual(L"Warning", Alarm{ Alarm::Type::Warning }.as_string());
 		}
+
+		TEST_METHOD(AnInvalidTypeReportsCorrectString)
+		{
+			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(static_cast<int>(Alarm::Type::TypeCount) + 1)}.as_string());
+			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(-2) }.as_string());
+		}
 	};
 }

@@ -58,12 +58,12 @@ namespace kjc
 
 	const wchar_t* Alarm::type_to_string(Type t)
 	{
-		const auto index = static_cast<gsl::index>(t);
-		if (index > static_cast<gsl::index>(Type::TypeCount) || index < 0) {
-			return type_to_string(Type::Unknown);
+		if (!type_is_valid(t)) {
+			return L"Invalid";
 		}
 
 		static constexpr auto name_lookup = std::array{
+			L"Unknown",
 			L"Warning",
 			L"Caution",
 			L"Advisory"
@@ -71,7 +71,12 @@ namespace kjc
 
 		static_assert(Type::TypeCount == Type(3), "Invalid type count. Check array above");
 
-		return gsl::at(name_lookup, index);
+		return gsl::at(name_lookup, 1 + static_cast<gsl::index>(t));
+	}
+
+	constexpr bool Alarm::type_is_valid(Type t)
+	{
+		return static_cast<gsl::index>(t) < static_cast<gsl::index>(Type::TypeCount) && static_cast<gsl::index>(t) >= -1;
 	}
 
 	Alarm make_alarm(Alarm::Type t)
