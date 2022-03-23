@@ -10,6 +10,7 @@ class AlarmList
 {
 public:
 	AlarmList() noexcept = default;
+	~AlarmList() noexcept = default;
 
 	AlarmList(const AlarmList&) = delete;
 	AlarmList& operator=(const AlarmList&) = delete;
