@@ -20,7 +20,7 @@ namespace kjc
 			_os << _get_alarm_string(alarm) << ',';
 		}
 
-		_os << _get_alarm_string(*std::prev(alarms.end()));
+		_os << _get_alarm_string(*std::prev(alarms.end())) << '\n';
 	}
 
 	const wchar_t* Display::_get_alarm_string(const std::optional<Alarm>& a)
