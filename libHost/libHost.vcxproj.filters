@@ -42,9 +42,6 @@
     <ClInclude Include="Pipe.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PipeImpl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pipeline.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

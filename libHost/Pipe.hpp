@@ -63,7 +63,7 @@ namespace kjc
 				return false;
 			}
 
-			gsl::at(_items, _wrapped_index(_end_idx++)) = std::move(item);
+			_items[_wrapped_index(_end_idx++)] = std::make_optional<Item_t>(std::move(item));
 
 			return true;
 		}

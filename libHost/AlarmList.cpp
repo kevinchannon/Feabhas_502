@@ -13,6 +13,11 @@ namespace kjc
 		emplace_back(std::forward<Alarm::Type>(t));
 	}
 
+	void AlarmList::erase(Alarm::Type t)
+	{
+		std::erase_if(*this, [t](auto&& alarm) { return t == alarm.type(); });
+	}
+
 	AlarmList make_random_alarm_list(size_t how_many, std::mt19937_64& rng)
 	{
 		auto out = AlarmList{};

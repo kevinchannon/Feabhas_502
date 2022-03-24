@@ -21,6 +21,7 @@
 #include "Generator.hpp"
 #include "Display.hpp"
 #include "Pipeline.hpp"
+#include "Remover.hpp"
 #include "Repeat.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,12 +37,16 @@ int main()
 	std::mt19937_64 rng{ 2123134 }; // Arbitrary seed.
 
 	try {
-		auto pipe = kjc::AlarmPipe{};
-		auto generator = kjc::Generator{ pipe , rng };
-		auto display = kjc::Display{ pipe, std::wcout };
+		auto pipe_1 = kjc::AlarmPipe{};
+		auto pipe_2 = kjc::AlarmPipe{};
+
+		auto generator = kjc::Generator{ pipe_1 , rng };
+		auto drop_advisory = kjc::Remover{ pipe_1, pipe_2, kjc::Alarm::Type::Advisory };
+		auto display = kjc::Display{ pipe_2, std::wcout };
 		auto pipeline = kjc::Pipeline{};
 
 		pipeline.add(generator);
+		pipeline.add(drop_advisory);
 		pipeline.add(display);
 
 		kjc::repeat([&pipeline]() { pipeline.run(); }, 10);
