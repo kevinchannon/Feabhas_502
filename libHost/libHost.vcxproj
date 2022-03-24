@@ -175,6 +175,7 @@
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="PipeImpl.hpp" />
     <ClInclude Include="Pipeline.hpp" />
+    <ClInclude Include="Remover.hpp" />
     <ClInclude Include="Repeat.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +193,7 @@
     </ClCompile>
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Pipeline.cpp" />
+    <ClCompile Include="Remover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,6 +5,7 @@
 #include <AlarmPipe.hpp>
 #include <AlarmList.hpp>
 #include <Display.hpp>
+#include <Remover.hpp>
 
 #include <Repeat.hpp>
 
@@ -277,7 +278,33 @@ namespace testHost
 			std::wstringstream output;
 			Display{ pipe, output }.execute();
 
-			Assert::AreEqual(std::wstring(L"Advisory,Caution,Warning"), output.str());
+			Assert::AreEqual(std::wstring(L"Advisory,Caution,Warning\n"), output.str());
+		}
+	};
+
+	TEST_CLASS(TestRemover)
+	{
+	public:
+		TEST_METHOD(RemovesAlarmsOfTheCorrectType)
+		{
+			for (auto target_type : {Alarm::Type::Advisory, Alarm::Type::Caution, Alarm::Type::Warning} ) {
+
+				auto in_pipe = AlarmPipe{};
+				auto out_pipe = AlarmPipe{};
+
+				auto alarms = AlarmList{};
+				alarms.emplace(Alarm::Type::Advisory);
+				alarms.emplace(Alarm::Type::Caution);
+				alarms.emplace(Alarm::Type::Warning);
+
+				in_pipe.push(std::move(alarms));
+
+				Remover{ in_pipe, out_pipe, target_type }.execute();
+
+				alarms = out_pipe.pull();
+
+				Assert::IsTrue(alarms.end() == std::find(alarms.begin(), alarms.end(), Alarm{ target_type }));
+			}
 		}
 	};
 }

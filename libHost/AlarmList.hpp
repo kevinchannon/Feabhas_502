@@ -23,6 +23,7 @@ public:
 	using std::vector<Alarm>::reserve;
 	using std::vector<Alarm>::begin;
 	using std::vector<Alarm>::end;
+	using std::vector<Alarm>::erase;
 
 	void add(Alarm a);
 	void emplace(Alarm::Type t);
