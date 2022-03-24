@@ -11,7 +11,16 @@ namespace kjc
 
 	void Display::execute()
 	{
-		_os << _get_alarm_string(_pipe.pull()) << '\n';
+		const auto alarms = _pipe.pull();
+		if (alarms.size() == 0) {
+			return;
+		}
+
+		for (auto alarm : alarms | std::views::take(alarms.size() - 1) ) {
+			_os << _get_alarm_string(alarm) << ',';
+		}
+
+		_os << _get_alarm_string(*std::prev(alarms.end()));
 	}
 
 	const wchar_t* Display::_get_alarm_string(const std::optional<Alarm>& a)

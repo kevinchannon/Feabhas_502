@@ -3,6 +3,6 @@
 namespace kjc
 {
 	AlarmPipe::AlarmPipe()
-		: Pipe<Alarm, 20>{}
+		: Pipe<AlarmList, 20>{}
 	{}
 }

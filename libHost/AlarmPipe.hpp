@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Pipe.hpp"
-#include "Alarm.hpp"
+#include "AlarmList.hpp"
 
 namespace kjc
 {
-	class AlarmPipe : Pipe<Alarm, 20>
+	class AlarmPipe : Pipe<AlarmList, 20>
 	{
 	public:
 		AlarmPipe();
@@ -14,7 +14,7 @@ namespace kjc
 		AlarmPipe& operator=(const AlarmPipe&) = delete;
 		AlarmPipe& operator=(AlarmPipe&&) = delete;
 
-		using Base_t = Pipe<Alarm, 20>;
+		using Base_t = Pipe<AlarmList, 20>;
 
 		using Base_t::pull;
 		using Base_t::push;

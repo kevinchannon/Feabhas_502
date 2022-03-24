@@ -3,6 +3,7 @@
 #include "Alarm.hpp"
 
 #include <vector>
+#include <random>
 
 namespace kjc
 {
@@ -23,14 +24,10 @@ public:
 	using std::vector<Alarm>::begin;
 	using std::vector<Alarm>::end;
 
-	void add(Alarm a)
-	{
-		push_back(std::move(a));
-	}
-
-	void emplace(Alarm::Type t)
-	{
-		emplace_back(std::forward<Alarm::Type>(t));
-	}
+	void add(Alarm a);
+	void emplace(Alarm::Type t);
 };
+
+AlarmList make_random_alarm_list(size_t how_many, std::mt19937_64& rng);
+
 }

@@ -4,6 +4,7 @@
 #include <Generator.hpp>
 #include <AlarmPipe.hpp>
 #include <AlarmList.hpp>
+#include <Display.hpp>
 
 #include <Repeat.hpp>
 
@@ -39,10 +40,7 @@ namespace testHost
 	{
 		std::mt19937_64 rng{ random_seed };
 
-		auto out = AlarmList{};
-		kjc::repeat([&out, &rng]() { out.add(make_random_alarm(rng)); }, how_many);
-
-		return out;
+		return kjc::make_random_alarm_list(how_many, rng);
 	}
 
 	TEST_CLASS(TestAlarm)
@@ -243,6 +241,43 @@ namespace testHost
 			};
 
 			kjc::repeat(fill_and_empty_pipe, 1'000'000);
+		}
+	};
+
+	TEST_CLASS(TestGenerator)
+	{
+	public:
+		TEST_METHOD(ExecutePushesAlarmsToPipe)
+		{
+			std::mt19937_64 rng{ 234839432 };
+			auto pipe = AlarmPipe{};
+
+			Generator{ pipe, rng }.execute();
+
+			const auto alarms = pipe.pull();
+
+			Assert::IsTrue(alarms.size() > 0);
+		}
+	};
+
+	TEST_CLASS(TestDisplay)
+	{
+	public:
+		TEST_METHOD(DisplatPrintsAllItemsInAlarmList)
+		{
+			auto pipe = AlarmPipe{};
+
+			auto alarms = AlarmList{};
+			alarms.emplace(Alarm::Type::Advisory);
+			alarms.emplace(Alarm::Type::Caution);
+			alarms.emplace(Alarm::Type::Warning);
+
+			pipe.push(std::move(alarms));
+
+			std::wstringstream output;
+			Display{ pipe, output }.execute();
+
+			Assert::AreEqual(std::wstring(L"Advisory,Caution,Warning"), output.str());
 		}
 	};
 }

@@ -11,6 +11,6 @@ namespace kjc
 
 	void Generator::execute()
 	{
-		_pipe.push(make_random_alarm(_rng));
+		_pipe.push(make_random_alarm_list(std::uniform_int_distribution<>{ 1, 10 }(_rng), _rng));
 	}
 }

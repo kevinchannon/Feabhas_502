@@ -180,6 +180,7 @@
   <ItemGroup>
     <ClCompile Include="Alarm.cpp" />
     <ClCompile Include="AlarmIO.cpp" />
+    <ClCompile Include="AlarmList.cpp" />
     <ClCompile Include="AlarmPipe.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Generator.cpp" />
