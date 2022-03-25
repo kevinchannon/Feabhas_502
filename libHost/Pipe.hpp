@@ -50,20 +50,22 @@ namespace kjc
 		Pipe& operator=(const Pipe&) = delete;
 		Pipe& operator=(Pipe&&) = delete;
 
-		void push(Item_t item)
+		template< typename T>
+		void push(T&& item)
 		{
-			if (!try_push(std::move(item))) {
+			if (!try_push(std::forward<T>(item))) {
 				throw PipeFull{ "Failed to push into pipe: pipe full" };
 			}
 		}
 
-		[[nodiscard]] bool try_push(Item_t item)
+		template<typename T>
+		[[nodiscard]] bool try_push(T&& item)
 		{
 			if (is_full()) {
 				return false;
 			}
 
-			_items[_wrapped_index(_end_idx++)] = std::make_optional<Item_t>(std::move(item));
+			gsl::at(_items, _wrapped_index(_end_idx++)) = std::make_optional<Item_t>(std::forward<T>(item));
 
 			return true;
 		}
