@@ -11,8 +11,8 @@
 
 #ifndef _DEBUG
 #pragma warning(push)
-#pragma warning(disable: 4711)
-#pragma warning(disable: 4710)
+#pragma warning(disable: 4711)	// Warning C4711: Force inling function
+#pragma warning(disable: 4710)	// Warning C4711: Force inling function
 #endif
 
 #pragma warning(push)
