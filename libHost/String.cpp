@@ -16,15 +16,12 @@ namespace kjc
 
 	String::dynamic_str::dynamic_str(const dynamic_str& other)
 		: dynamic_str{other.data, other.len}
-	{
-	}
+	{}
 
 	String::dynamic_str::dynamic_str(dynamic_str&& other) noexcept
 		: len{ other.len }
 		, data{ std::exchange(other.data, nullptr) }
-	{
-
-	}
+	{}
 
 	String::static_str::static_str(const wchar_t* s, size_t len)
 		: len{ gsl::narrow_cast<uint8_t>(len) }
@@ -77,6 +74,5 @@ namespace kjc
 
 	String::String(const wchar_t* s)
 		: _store{ make_store(s) }
-	{
-	}
+	{}
 }
