@@ -46,7 +46,7 @@ namespace kjc
 					return arg.len > 0 ? arg.data.data() : L"";
 				}
 				else {
-					return arg.len > 0 ? arg.data : L"";
+					return arg.data ? arg.data : L"";
 				}
 			}, * this);
 	}
