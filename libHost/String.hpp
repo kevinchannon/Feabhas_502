@@ -19,8 +19,8 @@ namespace kjc
 		String& operator=(const String& other) = default;
 		String& operator=(String&& other) = default;
 
-		const wchar_t* what() const noexcept { return _store.what(); }
-		auto length() const noexcept { return _store.length(); }
+		[[nodiscard]] const wchar_t* what() const noexcept { return _store.what(); }
+		[[nodiscard]] auto length() const noexcept { return _store.length(); }
 
 	private:
 
