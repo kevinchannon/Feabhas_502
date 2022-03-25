@@ -27,6 +27,7 @@ namespace kjc
 		class dynamic_str
 		{
 		public:
+			dynamic_str() = delete;
 			~dynamic_str();
 			dynamic_str(const wchar_t* s, size_t len);
 			dynamic_str(const dynamic_str& other);
@@ -45,8 +46,8 @@ namespace kjc
 				swap(a.data, b.data);
 			}
 
-			size_t len;
-			wchar_t* data;
+			size_t len{ 0 };
+			wchar_t* data{nullptr};
 		};
 
 		static constexpr auto max_static_str_len = (sizeof(dynamic_str) - sizeof(uint8_t) - sizeof(L'\0')) / sizeof(L'\0');
@@ -60,8 +61,8 @@ namespace kjc
 			static_str& operator=(const static_str&) noexcept = default;
 			static_str& operator=(static_str&&) noexcept = default;
 
-			uint8_t len;
-			std::array<wchar_t, max_static_str_len + 1> data;
+			uint8_t len{ 0 };
+			std::array<wchar_t, max_static_str_len + 1> data{};
 		};
 
 		class Storage : protected std::variant<dynamic_str, static_str>
