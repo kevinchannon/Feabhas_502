@@ -1,4 +1,5 @@
 #include "String.hpp"
+#include "Overload.hpp"
 
 namespace kjc
 {
@@ -38,17 +39,9 @@ namespace kjc
 
 	const wchar_t* String::Storage::what() const noexcept
 	{
-		return std::visit([](auto&& arg) -> const wchar_t* {
-				using Arg_t = std::decay_t<decltype(arg)>;
-				if constexpr (std::is_same_v<Arg_t, static_str>) {
-					return arg.len > 0 ? arg.data.data() : L"";
-				}
-				else if constexpr (std::is_same_v<Arg_t, dynamic_str>) {
-					return arg.data ? arg.data : L"";
-				}
-				else {
-					static_assert(std::bool_constant<std::is_same_v<Arg_t, static_str>>::values, "Unhandled variant type");
-				}
+		return std::visit(Overload{
+			[](const static_str& s) -> const wchar_t* {return s.len > 0 ? s.data.data() : L""; },
+			[](const dynamic_str& s) -> const wchar_t* {return s.data ? s.data : L""; }
 			}, this->as_variant());
 	}
 

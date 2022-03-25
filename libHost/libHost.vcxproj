@@ -171,6 +171,7 @@
     <ClInclude Include="Display.hpp" />
     <ClInclude Include="Filter.hpp" />
     <ClInclude Include="Generator.hpp" />
+    <ClInclude Include="Overload.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="Pipeline.hpp" />
