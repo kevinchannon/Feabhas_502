@@ -43,10 +43,13 @@ namespace kjc
 				if constexpr (std::is_same_v<Arg_t, static_str>) {
 					return arg.len > 0 ? arg.data.data() : L"";
 				}
-				else {
+				else if constexpr (std::is_same_v<Arg_t, dynamic_str>) {
 					return arg.data ? arg.data : L"";
 				}
-			}, * this);
+				else {
+					static_assert(std::bool_constant<std::is_same_v<Arg_t, static_str>>::values, "Unhandled variant type");
+				}
+			}, *this);
 	}
 
 	String::Storage String::make_store(const wchar_t* s)
