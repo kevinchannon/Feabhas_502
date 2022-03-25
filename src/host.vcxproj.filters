@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.hpp">
+    <ClInclude Include="host_pch.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,8 +89,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>lib_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>lib_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -109,8 +109,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>lib_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>lib_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -129,8 +129,8 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>lib_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>lib_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -149,8 +149,8 @@
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>lib_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>lib_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -172,7 +172,7 @@
     <ClInclude Include="Filter.hpp" />
     <ClInclude Include="Generator.hpp" />
     <ClInclude Include="Overload.hpp" />
-    <ClInclude Include="pch.hpp" />
+    <ClInclude Include="lib_pch.hpp" />
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="Pipeline.hpp" />
     <ClInclude Include="Remover.hpp" />
@@ -191,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lib_pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Pipeline.cpp" />

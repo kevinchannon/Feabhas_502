@@ -9,6 +9,12 @@
 
 #include "CppUnitTest.h"
 
+#ifndef _DEBUG
+#pragma warning(push)
+#pragma warning(disable: 4711)
+#pragma warning(disable: 4710)
+#endif
+
 #pragma warning(push)
 #pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
 #include <gsl/gsl>
@@ -42,5 +48,11 @@
 #include <random>
 #include <ranges>
 #include <numeric>
+#include <variant>
+#include <map>
+
+#ifndef _DEBUG
+#pragma warning(pop)
+#endif
 
 #endif //PCH_H

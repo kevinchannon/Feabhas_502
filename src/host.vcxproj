@@ -96,8 +96,8 @@
       <CallingConvention>FastCall</CallingConvention>
       <AdditionalIncludeDirectories>$(SolutionDir)libHost;$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>host_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>host_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <DisableSpecificWarnings>4514;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -116,8 +116,8 @@
       <CallingConvention>FastCall</CallingConvention>
       <AdditionalIncludeDirectories>$(SolutionDir)libHost;$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>host_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>host_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <DisableSpecificWarnings>4514;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -136,8 +136,8 @@
       <PreprocessorDefinitions>__STDC_WANT_SECURE_LIB__</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libHost;$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>host_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>host_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <DisableSpecificWarnings>4514;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -152,8 +152,8 @@
       <PreprocessorDefinitions>__STDC_WANT_SECURE_LIB__</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libHost;$(SolutionDir)..\..\vcpkg\buildtrees\ms-gsl\src\f75fe5805c-465928fdc6.clean\include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>host_pch.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>host_pch.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <DisableSpecificWarnings>4514;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -167,10 +167,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">host_pch.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">host_pch.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">host_pch.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">host_pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.hpp" />
+    <ClInclude Include="host_pch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

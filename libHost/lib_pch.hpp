@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef _DEBUG
+#pragma warning(push)
+#pragma warning(disable: 4711)
+#endif
+
 #pragma warning(push)
 #pragma warning(disable: 4365)  // warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
 #include <gsl/gsl>
@@ -25,3 +30,17 @@
 
 #include <iostream>
 #pragma warning(pop)
+
+#include <stdexcept>
+#include <string_view>
+#include <optional>
+#include <array>
+#include <random>
+#include <ranges>
+#include <numeric>
+#include <variant>
+#include <map>
+
+#ifndef _DEBUG
+#pragma warning(pop)
+#endif

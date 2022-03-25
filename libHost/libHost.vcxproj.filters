@@ -18,7 +18,7 @@
     <ClInclude Include="api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.hpp">
+    <ClInclude Include="lib_pch.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Alarm.hpp">
