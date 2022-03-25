@@ -95,12 +95,17 @@ namespace kjc
 
 		[[nodiscard]] bool is_empty() const noexcept
 		{
-			return _begin_idx == _end_idx;
+			return count() == 0;
 		}
 
 		[[nodiscard]] bool is_full() const noexcept
 		{
-			return _end_idx - _begin_idx == gsl::narrow_cast<gsl::index>(_items.size());
+			return count() == gsl::narrow_cast<gsl::index>(_items.size());
+		}
+
+		[[nodiscard]] size_t count() const noexcept
+		{
+			return _end_idx - _begin_idx;
 		}
 
 	private:
