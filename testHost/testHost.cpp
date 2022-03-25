@@ -322,13 +322,19 @@ namespace testHost
 			Assert::AreEqual(L"", String{}.what());
 		}
 
-		TEST_METHOD(WhatReturnsTheCorrectMessage)
+		TEST_METHOD(WhatReturnsTheCorrectMessage_long)
 		{
 			const auto s = String{ L"Hello, String!" };
 			Assert::AreEqual(L"Hello, String!", s.what());
 		}
 
-		TEST_METHOD(CopyingStringWorks)
+		TEST_METHOD(WhatReturnsTheCorrectMessage_short)
+		{
+			const auto s = String{ L"cat" };
+			Assert::AreEqual(L"cat", s.what());
+		}
+
+		TEST_METHOD(CopyingStringWorks_long)
 		{
 			const auto s1 = String{ L"Hello, String!" };
 			const String s2{ s1 };
@@ -336,7 +342,15 @@ namespace testHost
 			Assert::AreEqual(s1.what(), s2.what());
 		}
 
-		TEST_METHOD(MoveStringWorks)
+		TEST_METHOD(CopyingStringWorks_short)
+		{
+			const auto s1 = String{ L"dog" };
+			const String s2{ s1 };
+
+			Assert::AreEqual(s1.what(), s2.what());
+		}
+
+		TEST_METHOD(MoveStringWorks_long)
 		{
 			constexpr auto expected_str = L"Hello, String!";
 
@@ -347,10 +361,20 @@ namespace testHost
 			Assert::AreEqual(wcslen(expected_str), s2.length());
 
 			Assert::AreEqual(L"", s1.what());
-			Assert::AreEqual(size_t{ 0 }, s1.length());
 		}
 
-		TEST_METHOD(CopyAssignmentWorks)
+		TEST_METHOD(MoveStringWorks_short)
+		{
+			constexpr auto expected_str = L"chick";
+
+			auto s1 = String{ expected_str };
+			const String s2{ std::move(s1) };
+
+			Assert::AreEqual(expected_str, s2.what());
+			Assert::AreEqual(wcslen(expected_str), s2.length());
+		}
+
+		TEST_METHOD(CopyAssignmentWorks_long)
 		{
 			const auto s1 = String{ L"Hello, String!" };
 			auto s2 = String{};
@@ -361,9 +385,31 @@ namespace testHost
 			Assert::AreEqual(s1.length(), s2.length());
 		}
 
-		TEST_METHOD(MoveAssignmentWorks)
+		TEST_METHOD(CopyAssignmentWorks_short)
+		{
+			const auto s1 = String{ L"duck" };
+			auto s2 = String{};
+
+			s2 = s1;
+
+			Assert::AreEqual(s1.what(), s2.what());
+			Assert::AreEqual(s1.length(), s2.length());
+		}
+
+		TEST_METHOD(MoveAssignmentWorks_long)
 		{
 			const auto s1 = String{ L"Hello, String!" };
+			auto s2 = String{};
+
+			s2 = std::move(s1);
+
+			Assert::AreEqual(s1.what(), s2.what());
+			Assert::AreEqual(s1.length(), s2.length());
+		}
+
+		TEST_METHOD(MoveAssignmentWorks_short)
+		{
+			const auto s1 = String{ L"pig" };
 			auto s2 = String{};
 
 			s2 = std::move(s1);

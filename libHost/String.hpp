@@ -1,26 +1,83 @@
 #pragma once
 
+#include <variant>
+#include <array>
+
 namespace kjc
 {
 
 	class String
 	{
 	public:
-		String();
 		String(const wchar_t* s);
-		~String();
-		String(const String& other);
-		String(String&& other);
 
-		String& operator=(String other);
+		String() = default;
+		~String() = default;
+		String(const String& other) = default;
+		String(String&& other) = default;
 
-		friend void swap(String& a, String& b);
+		String& operator=(const String& other) = default;
+		String& operator=(String&& other) = default;
 
-		const wchar_t* what() const;
-		auto length() const { return _len; }
+		const wchar_t* what() const noexcept { return _store.what(); }
+		auto length() const noexcept { return _store.length(); }
 
 	private:
-		size_t _len;
-		wchar_t* _s;
+
+		class dynamic_str
+		{
+		public:
+			~dynamic_str();
+			dynamic_str(const wchar_t* s, size_t len);
+			dynamic_str(const dynamic_str& other);
+			dynamic_str(dynamic_str&& other) noexcept;
+			dynamic_str& operator=(dynamic_str other)
+			{
+				swap(*this, other);
+				return *this;
+			}
+
+			friend void swap(dynamic_str& a, dynamic_str& b) noexcept
+			{
+				using std::swap;
+
+				swap(a.len, b.len);
+				swap(a.data, b.data);
+			}
+
+			size_t len;
+			wchar_t* data;
+		};
+
+		static constexpr auto max_static_str_len = (sizeof(dynamic_str) - sizeof(uint8_t) - sizeof(L'\0')) / sizeof(L'\0');
+		class static_str
+		{
+		public:
+			static_str() = default;
+			static_str(const wchar_t* s, size_t len);
+			static_str(const static_str&) noexcept = default;
+			static_str(static_str&&) noexcept = default;
+			static_str& operator=(const static_str&) noexcept = default;
+			static_str& operator=(static_str&&) noexcept = default;
+
+			uint8_t len;
+			std::array<wchar_t, max_static_str_len + 1> data;
+		};
+
+		struct Storage : public std::variant<dynamic_str, static_str>
+		{
+			using Base_t = std::variant<dynamic_str, static_str>;
+
+			Storage();
+			Storage(static_str s);
+			Storage(dynamic_str s);
+
+			size_t length() const noexcept;
+			const wchar_t* what() const noexcept;
+		};
+
+		static Storage make_store(const wchar_t* s);
+
+		Storage _store;
 	};
 }
