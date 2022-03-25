@@ -11,7 +11,7 @@ namespace kjc
 	class Generator : public Filter
 	{
 	public:
-		Generator(AlarmPipe& pipe, std::mt19937_64& rng);
+		Generator(AlarmPipe& pipe, std::mt19937_64& rng, size_t how_many);
 
 		Generator(const Generator&) = delete;
 		Generator(Generator&&) = delete;
@@ -23,6 +23,7 @@ namespace kjc
 	private:
 		std::mt19937_64& _rng;
 		AlarmPipe& _pipe;
+		size_t _how_many;
 	};
 
 }

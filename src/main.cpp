@@ -36,13 +36,16 @@ int main()
 		auto pipe_1 = kjc::AlarmPipe{};
 		auto pipe_2 = kjc::AlarmPipe{};
 
-		auto generator = kjc::Generator{ pipe_1 , rng };
+		auto generator = kjc::Generator{ pipe_1 , rng, 10 };
 		auto drop_advisory = kjc::Remover{ pipe_1, pipe_2, kjc::Alarm::Type::Advisory };
 		auto display = kjc::Display{ pipe_2, std::wcout };
 
-		auto pipeline = kjc::Pipeline{&generator, &drop_advisory, &display};
+		drop_advisory.execute();
+		display.execute();
 
-		kjc::repeat([&pipeline]() { pipeline.run(); }, 10);
+		generator.execute();
+
+
 	}
 	catch (const kjc::PipeException& ex) {
 		spdlog::error("Pipe failure: {}", ex.what());

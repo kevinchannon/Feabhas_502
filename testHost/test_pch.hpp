@@ -50,6 +50,7 @@
 #include <numeric>
 #include <variant>
 #include <map>
+#include <mutex>
 
 #ifndef _DEBUG
 #pragma warning(pop)

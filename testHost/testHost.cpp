@@ -7,6 +7,7 @@
 #include <Display.hpp>
 #include <Remover.hpp>
 #include <String.hpp>
+#include <AsyncPipe.hpp>
 
 #include <Repeat.hpp>
 
@@ -253,6 +254,121 @@ namespace testHost
 		}
 	};
 
+	TEST_CLASS(TestAsyncPipe)
+	{
+	public:
+		TEST_METHOD(IsEmptyOnConstruction)
+		{
+			Assert::IsTrue(AsyncPipe<int, 10>{}.is_empty());
+		}
+
+		TEST_METHOD(IsNotFullOnConstruction)
+		{
+			Assert::IsFalse(AsyncPipe<int, 10>{}.is_full());
+		}
+
+		TEST_METHOD(IsFullReportsTrueWhenPipeIsFull)
+		{
+			constexpr auto pipe_capacity = 4;
+
+			auto pipe = AsyncPipe<int, pipe_capacity>{};
+			for (auto i = 0u; i < pipe_capacity; ++i) {
+				Assert::IsFalse(pipe.is_full());
+				pipe.push(i);
+			}
+
+			Assert::IsTrue(pipe.is_full());
+		}
+
+		TEST_METHOD(ItemsAreHandledFIFO)
+		{
+			constexpr auto pipe_capacity = 20;
+
+			auto pipe = AsyncPipe<unsigned, pipe_capacity>{};
+			for (auto i = 0u; i < pipe_capacity; ++i) {
+				pipe.push(i);
+			}
+
+			for (auto i = 0u; i < pipe_capacity; ++i) {
+				Assert::AreEqual(i, pipe.pull());
+			}
+		}
+
+		TEST_METHOD(ExceptionOccursWhenPullingFromAnEmptyPipe)
+		{
+			Assert::ExpectException<PipeEmpty>([]() { std::ignore = AsyncPipe<int, 10>{}.pull(); });
+		}
+
+		TEST_METHOD(ExceptionOccursWhenPushingToAFullPipe)
+		{
+			auto pipe = AsyncPipe<int, 1>{};
+			pipe.push(1);
+
+			Assert::ExpectException<PipeFull>([&pipe]() { pipe.push(0); });
+		}
+
+		TEST_METHOD(TryPullReturnsNullIfPipeIsEmpty)
+		{
+			Assert::IsTrue(std::nullopt == AsyncPipe<double, 10>{}.try_pull());
+		}
+
+		TEST_METHOD(TryPushReturnsFalseIfPipeIsFull)
+		{
+			auto pipe = AsyncPipe<int, 1>{};
+			pipe.push(1);
+
+			Assert::IsFalse(pipe.try_push(10));
+		}
+
+		TEST_METHOD(ZeroSizePipeIsAlwaysBothFullAndEmpty)
+		{
+			auto pipe = AsyncPipe<int, 0>{};
+			Assert::IsTrue(pipe.is_full());
+			Assert::IsTrue(pipe.is_empty());
+		}
+
+		TEST_METHOD(ReturnsToEmptyWhenAllItemsArePulled)
+		{
+			constexpr auto pipe_capacity = 20;
+
+			auto pipe = AsyncPipe<unsigned, pipe_capacity>{};
+			for (auto i = 0u; i < pipe_capacity; ++i) {
+				pipe.push(i);
+			}
+
+			for (auto i = 0u; i < pipe_capacity; ++i) {
+				std::ignore = pipe.pull();
+			}
+
+			Assert::IsTrue(pipe.is_empty());
+		}
+
+		TEST_METHOD(NumberOfPushesExceedsCapacityIsOK)
+		{
+			auto pipe = AsyncPipe<unsigned, 10>{};
+
+			const auto fill_and_empty_pipe = [&pipe]() {
+				Assert::IsTrue(pipe.is_empty());
+				Assert::IsFalse(pipe.is_full());
+
+				for (auto i = 0u; i < 10; ++i) {
+					pipe.push(i);
+				}
+
+				Assert::IsTrue(pipe.is_full());
+
+				for (auto i = 0u; i < 10; ++i) {
+					std::ignore = pipe.pull();
+				}
+
+				Assert::IsTrue(pipe.is_empty());
+				Assert::IsFalse(pipe.is_full());
+			};
+
+			kjc::repeat(fill_and_empty_pipe, 1'000'000);
+		}
+	};
+
 	TEST_CLASS(TestGenerator)
 	{
 	public:
@@ -261,7 +377,7 @@ namespace testHost
 			std::mt19937_64 rng{ 234839432 };
 			auto pipe = AlarmPipe{};
 
-			Generator{ pipe, rng }.execute();
+			Generator{ pipe, rng, 1 }.execute();
 
 			const auto alarms = pipe.pull();
 

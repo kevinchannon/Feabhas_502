@@ -2,15 +2,40 @@
 #include "Alarm.hpp"
 #include "AlarmPipe.hpp"
 
+///////////////////////////////////////////////////////////////////////////////
+
+using namespace std::chrono_literals;
+
+///////////////////////////////////////////////////////////////////////////////
+
 namespace kjc
 {
-	Generator::Generator(AlarmPipe& pipe, std::mt19937_64& rng)
-		: _rng{ rng }	// Arbitrary seed.
-		, _pipe{ pipe }
-	{}
 
-	void Generator::execute()
-	{
-		_pipe.push(make_random_alarm_list(std::uniform_int_distribution<>{ 1, 10 }(_rng), _rng));
+///////////////////////////////////////////////////////////////////////////////
+
+Generator::Generator(AlarmPipe& pipe, std::mt19937_64& rng, size_t how_many)
+	: _rng{ rng }	// Arbitrary seed.
+	, _pipe{ pipe }
+	, _how_many{ how_many }
+{}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void Generator::execute()
+{
+	if (_how_many == 0) {
+		return;
 	}
+
+	for (auto i = 0; i < _how_many - 1; ++i) {
+		_pipe.push(make_random_alarm_list(std::uniform_int_distribution<>{ 1, 10 }(_rng), _rng));
+		std::this_thread::sleep_for(1s);
+	}
+
+	_pipe.push(make_random_alarm_list(std::uniform_int_distribution<>{ 1, 10 }(_rng), _rng));
 }
+
+///////////////////////////////////////////////////////////////////////////////
+}
+
+///////////////////////////////////////////////////////////////////////////////

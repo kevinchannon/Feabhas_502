@@ -27,28 +27,28 @@ namespace kjc
 		explicit PipeEmpty(std::string_view msg) : PipeException{ msg } {}
 	};
 
-	template<typename Item_T, size_t k_max_item_count>
-	class Pipe
+	template<typename Item_T, typename Index_T, size_t k_max_item_count>
+	class PipeBase
 	{
 	public:
-
+		using Index_t = Index_T;
 		using Item_t = Item_T;
 
-		Pipe() noexcept
+		PipeBase() noexcept
 			: _begin_idx{ 0 }
 			, _end_idx{ 0 }
 		{
 		}
 
-		~Pipe() noexcept
+		~PipeBase() noexcept
 		{
 		}
 
-		Pipe(const Pipe&) = delete;
-		Pipe(Pipe&&) = delete;
+		PipeBase(const PipeBase&) = delete;
+		PipeBase(PipeBase&&) = delete;
 
-		Pipe& operator=(const Pipe&) = delete;
-		Pipe& operator=(Pipe&&) = delete;
+		PipeBase& operator=(const PipeBase&) = delete;
+		PipeBase& operator=(PipeBase&&) = delete;
 
 		template< typename T>
 		void push(T&& item)
@@ -102,7 +102,7 @@ namespace kjc
 
 		[[nodiscard]] bool is_full() const noexcept
 		{
-			return count() == gsl::narrow_cast<gsl::index>(_items.size());
+			return count() == gsl::narrow_cast<Index_t>(_items.size());
 		}
 
 		[[nodiscard]] size_t count() const noexcept
@@ -112,16 +112,19 @@ namespace kjc
 
 	private:
 
-		[[nodiscard]] gsl::index _wrapped_index(gsl::index idx) const noexcept
+		[[nodiscard]] Index_t _wrapped_index(const Index_t& idx) const noexcept
 		{
-			return gsl::narrow_cast<gsl::index>(idx % _items.size());
+			return gsl::narrow_cast<Index_t>(idx % _items.size());
 		}
 
 		using ItemContainer_t = std::array<std::optional<Item_t>, k_max_item_count>;
 
 		ItemContainer_t _items;
-		gsl::index _begin_idx;
-		gsl::index _end_idx;
+		Index_t _begin_idx;
+		Index_t _end_idx;
 	};
 
+
+	template<typename Item_T, size_t k_max_item_count>
+	using Pipe = PipeBase<Item_T, gsl::index, k_max_item_count>;
 }

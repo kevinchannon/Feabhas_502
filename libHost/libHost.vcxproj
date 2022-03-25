@@ -168,6 +168,7 @@
     <ClInclude Include="AlarmList.hpp" />
     <ClInclude Include="AlarmPipe.hpp" />
     <ClInclude Include="api.h" />
+    <ClInclude Include="AsyncPipe.hpp" />
     <ClInclude Include="Display.hpp" />
     <ClInclude Include="Filter.hpp" />
     <ClInclude Include="Generator.hpp" />
