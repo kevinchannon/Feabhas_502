@@ -2,6 +2,12 @@
 
 namespace kjc
 {
+	String::String()
+		: _len{ 0 }
+		, _s{ nullptr }
+	{
+	}
+
 	String::String(const wchar_t* s)
 		: _len{ wcslen(s) }
 		, _s{ nullptr }
@@ -26,8 +32,21 @@ namespace kjc
 	{
 	}
 
+	String& String::operator=(String other)
+	{
+		swap(*this, other);
+		return *this;
+	}
+
 	const wchar_t* String::what() const
 	{
-		return _s;
+		return _s ? _s : L"";
+	}
+
+	void swap(String& a, String& b)
+	{
+		using std::swap;
+		swap(a._len, b._len);
+		swap(a._s, b._s);
 	}
 }

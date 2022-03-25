@@ -312,6 +312,16 @@ namespace testHost
 	TEST_CLASS(TestString)
 	{
 	public:
+		TEST_METHOD(DefaultConstructHasZeroLength)
+		{
+			Assert::AreEqual(size_t{ 0 }, String{}.length());
+		}
+
+		TEST_METHOD(DefaultConstructHasEmptyWhat)
+		{
+			Assert::AreEqual(L"", String{}.what());
+		}
+
 		TEST_METHOD(WhatReturnsTheCorrectMessage)
 		{
 			const auto s = String{ L"Hello, String!" };
@@ -321,7 +331,7 @@ namespace testHost
 		TEST_METHOD(CopyingStringWorks)
 		{
 			const auto s1 = String{ L"Hello, String!" };
-			const auto s2 = s1;
+			const String s2{ s1 };
 
 			Assert::AreEqual(s1.what(), s2.what());
 		}
@@ -336,8 +346,30 @@ namespace testHost
 			Assert::AreEqual(expected_str, s2.what());
 			Assert::AreEqual(wcslen(expected_str), s2.length());
 
-			Assert::IsNull(s1.what());
+			Assert::AreEqual(L"", s1.what());
 			Assert::AreEqual(size_t{ 0 }, s1.length());
+		}
+
+		TEST_METHOD(CopyAssignmentWorks)
+		{
+			const auto s1 = String{ L"Hello, String!" };
+			auto s2 = String{};
+
+			s2 = s1;
+
+			Assert::AreEqual(s1.what(), s2.what());
+			Assert::AreEqual(s1.length(), s2.length());
+		}
+
+		TEST_METHOD(MoveAssignmentWorks)
+		{
+			const auto s1 = String{ L"Hello, String!" };
+			auto s2 = String{};
+
+			s2 = std::move(s1);
+
+			Assert::AreEqual(s1.what(), s2.what());
+			Assert::AreEqual(s1.length(), s2.length());
 		}
 	};
 }
