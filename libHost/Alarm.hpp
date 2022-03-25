@@ -1,5 +1,7 @@
 #pragma once
 
+#include "String.hpp"
+
 #include <random>
 
 namespace kjc
@@ -21,15 +23,17 @@ namespace kjc
 		[[nodiscard]] static const wchar_t* type_to_string(Type t);
 		[[nodiscard]] static constexpr bool type_is_valid(Type t);
 
-		Alarm() noexcept;
 		explicit Alarm(Type t) noexcept;
-		Alarm(const Alarm& other) noexcept;
-		Alarm(Alarm&& other) noexcept;
+		Alarm(Type t, String description) noexcept;
+		Alarm() noexcept;
 
-		~Alarm() noexcept;
+		Alarm(const Alarm&) noexcept = default;
+		Alarm(Alarm&&) noexcept = default;
 
-		Alarm& operator=(const Alarm& other) noexcept;
-		Alarm& operator=(Alarm&& other) noexcept;
+		~Alarm() noexcept = default;
+
+		Alarm& operator=(const Alarm& other) noexcept = default;
+		Alarm& operator=(Alarm&& other) noexcept = default;
 
 		bool operator==(const Alarm& other) const noexcept;
 		bool operator!=(const Alarm& other) const noexcept;
@@ -37,10 +41,12 @@ namespace kjc
 		[[nodiscard]] Type type() const noexcept;
 
 		[[nodiscard]] const wchar_t* as_string() const;
+		[[nodiscard]] const String& description() const;
 
 	private:
 
 		Type _type;
+		String _description;
 	};
 
 	[[nodiscard]] Alarm make_alarm(Alarm::Type t);

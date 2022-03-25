@@ -56,9 +56,9 @@ namespace testHost
 		
 		TEST_METHOD(ConstructWithValueReturnsCorrectType)
 		{
-			Assert::AreEqual(Alarm::Type::Advisory, Alarm{ Alarm::Type::Advisory }.type());
-			Assert::AreEqual(Alarm::Type::Caution, Alarm{ Alarm::Type::Caution }.type());
-			Assert::AreEqual(Alarm::Type::Warning, Alarm{ Alarm::Type::Warning }.type());
+			Assert::AreEqual(Alarm::Type::Advisory, Alarm{ Alarm::Type::Advisory, L"desc" }.type());
+			Assert::AreEqual(Alarm::Type::Caution, Alarm{ Alarm::Type::Caution, L"desc" }.type());
+			Assert::AreEqual(Alarm::Type::Warning, Alarm{ Alarm::Type::Warning, L"desc" }.type());
 		}
 
 		TEST_METHOD(AsStringReturnsTheCorrectString)

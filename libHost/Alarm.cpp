@@ -6,44 +6,16 @@ namespace kjc
 	{
 	}
 
-	Alarm::Alarm(Type t) noexcept : _type{ t }
+	Alarm::Alarm(Type t) noexcept
+		: _type{ t }
+		, _description{}
 	{
 	}
 
-	Alarm::Alarm(const Alarm& other) noexcept
-		: _type{ other._type }
+	Alarm::Alarm(Type t, String description) noexcept
+		: _type{ t }
+		, _description{ std::move(description) }
 	{
-	}
-
-	Alarm::Alarm(Alarm&& other) noexcept
-		: _type{ other._type }
-	{
-		other._type = Type::Unknown;
-	}
-
-	Alarm::~Alarm() noexcept
-	{
-	}
-
-	Alarm& Alarm::operator=(const Alarm& other) noexcept
-	{
-		if (this == &other) {
-			return *this;
-		}
-
-		_type = other._type;
-		return *this;
-	}
-
-	Alarm& Alarm::operator=(Alarm&& other) noexcept
-	{
-		if (this == &other) {
-			return *this;
-		}
-
-		_type = other._type;
-		other._type = Type::Unknown;
-		return *this;
 	}
 
 	bool Alarm::operator==(const Alarm& other) const noexcept
@@ -64,6 +36,11 @@ namespace kjc
 	const wchar_t* Alarm::as_string() const
 	{
 		return type_to_string(_type);
+	}
+
+	const String& Alarm::description() const
+	{
+		return _description;
 	}
 
 	const wchar_t* Alarm::type_to_string(Type t)
@@ -91,11 +68,17 @@ namespace kjc
 
 	Alarm make_alarm(Alarm::Type t)
 	{
-		return Alarm{ t };
+		static const auto descriptions = std::map<Alarm::Type, String>{
+			{Alarm::Type::Advisory, L"This is an advisory alarm. Can be ignored safely, but something is not quite right" },
+			{Alarm::Type::Caution, L"Take care!"},
+			{Alarm::Type::Warning, L"Warn!"}
+		};
+
+		return Alarm{ t, descriptions.at(t) };
 	}
 
 	Alarm make_random_alarm(std::mt19937_64& rng)
 	{
-		return Alarm{ Alarm::Type{ std::uniform_int_distribution<>{0, static_cast<int>(Alarm::Type::TypeCount) - 1}(rng)} };
+		return make_alarm( Alarm::Type{ std::uniform_int_distribution<>{0, static_cast<int>(Alarm::Type::TypeCount) - 1}(rng)} );
 	}
 }

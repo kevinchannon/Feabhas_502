@@ -8,11 +8,6 @@ namespace kjc
 		push_back(std::move(a));
 	}
 
-	void AlarmList::emplace(Alarm::Type t)
-	{
-		emplace_back(std::forward<Alarm::Type>(t));
-	}
-
 	void AlarmList::erase(Alarm::Type t)
 	{
 		std::erase_if(*this, [t](auto&& alarm) { return t == alarm.type(); });

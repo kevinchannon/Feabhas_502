@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Alarm.hpp"
+#include "String.hpp"
 
 #include <vector>
 #include <random>
@@ -25,7 +26,13 @@ public:
 	using std::vector<Alarm>::end;
 
 	void add(Alarm a);
-	void emplace(Alarm::Type t);
+
+	template<typename... Args_T>
+	void emplace(Args_T&&... args)
+	{
+		emplace_back(std::forward<Args_T>(args)...);
+	}
+	
 	void erase(Alarm::Type t);
 };
 
