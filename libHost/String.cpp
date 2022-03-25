@@ -58,12 +58,7 @@ namespace kjc
 	String::Storage String::make_store(const wchar_t* s)
 	{
 		const auto len = wcslen(s);
-		if (len < max_static_str_len) {
-			return { static_str{s, len} };
-		}
-		else {
-			return { dynamic_str{s, len} };
-		}
+		return len < max_static_str_len ? Storage{static_str{ s, len }} : Storage{dynamic_str{ s, len }};
 	}
 
 	String::Storage::Storage()
