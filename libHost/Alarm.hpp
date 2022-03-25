@@ -46,7 +46,7 @@ namespace kjc
 	private:
 
 		Type _type;
-		String _description;
+		String _description{};
 	};
 
 	[[nodiscard]] Alarm make_alarm(Alarm::Type t);

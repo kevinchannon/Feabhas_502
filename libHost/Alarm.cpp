@@ -8,7 +8,6 @@ namespace kjc
 
 	Alarm::Alarm(Type t) noexcept
 		: _type{ t }
-		, _description{}
 	{
 	}
 
