@@ -64,8 +64,9 @@ namespace kjc
 			std::array<wchar_t, max_static_str_len + 1> data;
 		};
 
-		struct Storage : protected std::variant<dynamic_str, static_str>
+		class Storage : protected std::variant<dynamic_str, static_str>
 		{
+		public:
 			using Base_t = std::variant<dynamic_str, static_str>;
 
 			Storage();
