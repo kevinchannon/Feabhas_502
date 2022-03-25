@@ -43,11 +43,8 @@ int main()
 		auto generator = kjc::Generator{ pipe_1 , rng };
 		auto drop_advisory = kjc::Remover{ pipe_1, pipe_2, kjc::Alarm::Type::Advisory };
 		auto display = kjc::Display{ pipe_2, std::wcout };
-		auto pipeline = kjc::Pipeline{};
 
-		pipeline.add(generator);
-		pipeline.add(drop_advisory);
-		pipeline.add(display);
+		auto pipeline = kjc::Pipeline{&generator, &drop_advisory, &display};
 
 		kjc::repeat([&pipeline]() { pipeline.run(); }, 10);
 	}

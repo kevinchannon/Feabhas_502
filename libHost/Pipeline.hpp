@@ -9,6 +9,8 @@ namespace kjc
 	public:
 		Pipeline() = default;
 
+		Pipeline(std::initializer_list<Filter*> filters);
+
 		Pipeline(const Pipeline&) = delete;
 		Pipeline(Pipeline&&) = delete;
 

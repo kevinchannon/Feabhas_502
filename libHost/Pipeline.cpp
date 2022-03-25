@@ -4,6 +4,10 @@
 
 namespace kjc
 {
+	Pipeline::Pipeline(std::initializer_list<Filter*> filters)
+		: _filters{ filters }
+	{}
+
 	void Pipeline::add(Filter& f)
 	{
 		_filters.push_back(&f);
