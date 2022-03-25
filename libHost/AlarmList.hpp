@@ -8,7 +8,7 @@
 
 namespace kjc
 {
-class AlarmList : protected std::vector<Alarm>
+class AlarmList : private std::vector<Alarm>
 {
 public:
 	AlarmList() noexcept = default;

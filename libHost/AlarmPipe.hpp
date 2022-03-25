@@ -5,7 +5,7 @@
 
 namespace kjc
 {
-	class AlarmPipe : Pipe<AlarmList, 20>
+	class AlarmPipe : private Pipe<AlarmList, 20>
 	{
 	public:
 		AlarmPipe();

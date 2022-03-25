@@ -64,7 +64,7 @@ namespace kjc
 			std::array<wchar_t, max_static_str_len + 1> data;
 		};
 
-		struct Storage : public std::variant<dynamic_str, static_str>
+		struct Storage : protected std::variant<dynamic_str, static_str>
 		{
 			using Base_t = std::variant<dynamic_str, static_str>;
 
@@ -74,6 +74,9 @@ namespace kjc
 
 			size_t length() const noexcept;
 			const wchar_t* what() const noexcept;
+
+			Base_t& as_variant();
+			const Base_t& as_variant() const;
 		};
 
 		static Storage make_store(const wchar_t* s);

@@ -33,7 +33,7 @@ namespace kjc
 
 	size_t String::Storage::length() const noexcept
 	{
-		return std::visit([](auto&& arg) -> size_t { return arg.len; }, *this);
+		return std::visit([](auto&& arg) -> size_t { return arg.len; }, this->as_variant());
 	}
 
 	const wchar_t* String::Storage::what() const noexcept
@@ -49,7 +49,17 @@ namespace kjc
 				else {
 					static_assert(std::bool_constant<std::is_same_v<Arg_t, static_str>>::values, "Unhandled variant type");
 				}
-			}, *this);
+			}, this->as_variant());
+	}
+
+	const String::Storage::Base_t& String::Storage::as_variant() const
+	{
+		return *this;
+	}
+
+	String::Storage::Base_t& String::Storage::as_variant()
+	{
+		return const_cast<String::Storage::Base_t&>(const_cast<const Storage*>(this)->as_variant());
 	}
 
 	String::Storage String::make_store(const wchar_t* s)
