@@ -73,6 +73,13 @@ namespace testHost
 			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(static_cast<int>(Alarm::Type::TypeCount) + 1)}.as_string());
 			Assert::AreEqual(L"Invalid", Alarm{ static_cast<Alarm::Type>(-2) }.as_string());
 		}
+		
+		TEST_METHOD(MakeAlarmAddsTheExpectedDescriptions)
+		{
+			Assert::AreEqual(L"This is an advisory alarm. Can be ignored safely, but something is not quite right", make_alarm(Alarm::Type::Advisory).description().what());
+			Assert::AreEqual(L"Take care!", make_alarm(Alarm::Type::Caution).description().what());
+			Assert::AreEqual(L"Warn!", make_alarm(Alarm::Type::Warning).description().what());
+		}
 	};
 
 	TEST_CLASS(TestAlarmList)

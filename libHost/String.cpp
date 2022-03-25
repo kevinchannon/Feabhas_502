@@ -28,6 +28,7 @@ namespace kjc
 
 	String::static_str::static_str(const wchar_t* s, size_t len)
 		: len{ gsl::narrow_cast<uint8_t>(len) }
+		, data{}
 	{
 		std::copy_n(s, len, data.begin());
 		data.back() = wchar_t{};
