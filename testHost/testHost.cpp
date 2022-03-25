@@ -6,6 +6,7 @@
 #include <AlarmList.hpp>
 #include <Display.hpp>
 #include <Remover.hpp>
+#include <String.hpp>
 
 #include <Repeat.hpp>
 
@@ -305,6 +306,24 @@ namespace testHost
 
 				Assert::IsTrue(alarms.end() == std::find(alarms.begin(), alarms.end(), Alarm{ target_type }));
 			}
+		}
+	};
+
+	TEST_CLASS(TestString)
+	{
+	public:
+		TEST_METHOD(WhatReturnsTheCorrectMessage)
+		{
+			const auto s = String{ L"Hello, String!" };
+			Assert::AreEqual(L"Hello, String!", s.what());
+		}
+
+		TEST_METHOD(CopyingAStringWorks)
+		{
+			const auto s1 = String{ L"Hello, String!" };
+			const auto s2 = s1;
+
+			Assert::AreEqual(s1.what(), s2.what());
 		}
 	};
 }

@@ -176,6 +176,7 @@
     <ClInclude Include="Pipeline.hpp" />
     <ClInclude Include="Remover.hpp" />
     <ClInclude Include="Repeat.hpp" />
+    <ClInclude Include="String.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Alarm.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Remover.cpp" />
+    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
