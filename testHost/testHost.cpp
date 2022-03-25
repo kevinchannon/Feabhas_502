@@ -318,12 +318,26 @@ namespace testHost
 			Assert::AreEqual(L"Hello, String!", s.what());
 		}
 
-		TEST_METHOD(CopyingAStringWorks)
+		TEST_METHOD(CopyingStringWorks)
 		{
 			const auto s1 = String{ L"Hello, String!" };
 			const auto s2 = s1;
 
 			Assert::AreEqual(s1.what(), s2.what());
+		}
+
+		TEST_METHOD(MoveStringWorks)
+		{
+			constexpr auto expected_str = L"Hello, String!";
+
+			auto s1 = String{ expected_str };
+			const String s2{ std::move(s1) };
+
+			Assert::AreEqual(expected_str, s2.what());
+			Assert::AreEqual(wcslen(expected_str), s2.length());
+
+			Assert::IsNull(s1.what());
+			Assert::AreEqual(size_t{ 0 }, s1.length());
 		}
 	};
 }

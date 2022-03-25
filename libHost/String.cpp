@@ -20,6 +20,12 @@ namespace kjc
 	{
 	}
 
+	String::String(String&& other)
+		: _len{ std::exchange(other._len, 0) }
+		, _s{ std::exchange(other._s, nullptr) }
+	{
+	}
+
 	const wchar_t* String::what() const
 	{
 		return _s;
